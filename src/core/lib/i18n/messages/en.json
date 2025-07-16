@@ -1,0 +1,54 @@
+{
+  "Components": {
+    "Enter": "Enter {title}",
+    "Choose": "Choose {title}",
+    "Validating": "Validating...",
+    "PleaseEnter": "Please enter {title}",
+    "PleaseChoose": "Please choose {title}",
+    "PleaseEnterAValidEmailAddress": "Please enter a valid email address!",
+    "PleaseEnterAtLeastNumberCharacters": "Please enter at least {min} number characters!",
+    "PleaseEnterOnlyNumber": "Please enter only number!",
+    "PleaseEnterMinimumNumber": "Please enter minimum {min} number!",
+    "PleaseEnterMaximumNumber": "Please enter maximum {max} number!",
+    "PleaseEnterOnlyText": "Please enter only text!",
+    "PleaseEnterAtLeastCharacters": "Please enter at least {min} characters!",
+    "PleaseEnterMaximumCharacters": "Please enter maximum {max} characters!",
+    "PasswordNeedsToHaveAtLeast8Characters": "Password needs to have at least 8 characters, including at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character!",
+    "IsAlreadyTaken": "{label} {value} is already taken!",
+    "LoadingPage": "Loading Page",
+    "PageNotFound": "Page Not Found",
+    "SomeThingMissing": "Something's Missing...!",
+    "ThisPageIsNotAvailable": "This page is not available",
+    "SorryWeCantFindThePageYoureLookingFor": "Sorry, we can't find the page you're looking for",
+    "BackToHome": "Back to Home",
+    "ReloadPage": "Reload Page",
+    "InternalServerError": "Internal Server Error",
+    "InternalServerErrorMessage": "We're not exactly sure what happened, but our servers say something is wrong."
+  },
+  "Messages": {
+    "Success": "Success",
+    "Okay": "Okay",
+    "Cancel": "Cancel",
+    "Error": "Error",
+    "Warning": "Warning",
+    "Confirmation": "Confirmation",
+    "CredentialsSignin": "Email or password is incorrect"
+  },
+  "NotFound": {
+    "Title": "Not Found",
+    "Message": "The page you are looking for does not exist."
+  },
+  "Modules/Auth": {
+    "AppName": "React App",
+    "EnterpriseManagementSystem": "Enterprise Management System",
+    "SignIn": "Sign In",
+    "EnterYourDetailsToLoginToYourAccount": "Enter your details to login to your account",
+    "Username": "Username",
+    "Password": "Password",
+    "LogIn": "Log In"
+  },
+  "HomePage": {
+    "Title": "Hello world!",
+    "About": "Go to the about page"
+  }
+}

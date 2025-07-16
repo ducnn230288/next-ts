@@ -1,0 +1,26 @@
+name: 'next-production'
+services:
+  nextjs:
+    build:
+      context: '..'
+      dockerfile: '.docker/Dockerfile'
+    environment:
+      NODE_ENV: 'production'
+      APP_NAME: 'React TSX'
+      URL_API: '/api'
+      FORMAT_DATE: 'DD-MM-YYYY'
+      NEXTAUTH_URL: 'http://localhost:3000'
+      NEXTAUTH_SECRET: '4f8e2b9c3a1d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f'
+      DATABASE_URL: 'postgres://root:MyP@ssw0rd@database:5432/next-ts'
+    ports:
+      - '3000:3000'
+
+  database:
+    build:
+      context: '..'
+      dockerfile: '.docker/Dockerfile-database'
+    restart: 'always'
+    environment:
+      POSTGRES_USER: 'root'
+      POSTGRES_PASSWORD: 'MyP@ssw0rd'
+      POSTGRES_DB: 'next-ts'

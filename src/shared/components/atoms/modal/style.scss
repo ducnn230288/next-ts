@@ -1,0 +1,40 @@
+@reference "../../../../tailwind.css";
+
+.modal {
+  transition: background 0.25s;
+  @apply bg-base-900/0 fixed inset-0 z-50 flex items-center justify-center;
+
+  &.open {
+    @apply bg-base-900/40;
+
+    > div {
+      @apply translate-y-0 opacity-100;
+    }
+  }
+
+  > button {
+    @apply fixed top-0 left-0 h-full w-full;
+  }
+  > div {
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    @apply bg-base-0 min-h-32 min-w-80 translate-y-10 rounded-lg opacity-0 shadow;
+
+    > .header {
+      @apply border-b px-6 py-4 text-lg font-semibold;
+    }
+    > .close {
+      @apply absolute top-3 right-3;
+      > svg {
+        @apply size-3;
+      }
+    }
+
+    > .body {
+      @apply p-6;
+    }
+
+    > .footer {
+      @apply flex justify-end border-t px-6 py-4;
+    }
+  }
+}

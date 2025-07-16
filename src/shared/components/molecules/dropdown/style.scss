@@ -1,0 +1,12 @@
+@reference "../../../../tailwind.css";
+.tooltip.dropdown {
+  @apply bg-base-0 p-0;
+
+  .menu.col {
+    @apply rounded;
+
+    li > button {
+      @apply rounded;
+    }
+  }
+}
