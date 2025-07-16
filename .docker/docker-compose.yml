@@ -1,0 +1,11 @@
+name: 'next-development'
+services:
+  database:
+    image: 'postgres'
+    restart: 'always'
+    environment:
+      POSTGRES_USER: 'root'
+      POSTGRES_PASSWORD: 'MyP@ssw0rd'
+      POSTGRES_DB: 'next-ts'
+    ports:
+      - '5432:5432'
