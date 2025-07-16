@@ -1,0 +1,113 @@
+@reference "./tailwind.css";
+body {
+  @apply bg-base-0 text-base-800 overflow-x-hidden text-sm leading-6;
+}
+h4 {
+  @apply text-lg font-bold;
+}
+@for $i from 1 through 9 {
+  .intro-x:nth-child(#{$i}) {
+    transform: translateX(5rem);
+    @apply animate-intro-x-animation opacity-0;
+    z-index: #{10 - $i};
+    animation-delay: 0#{$i}s;
+  }
+  .-intro-x:nth-child(#{$i}) {
+    transform: translateX(-5rem);
+    @apply animate-intro-x-animation opacity-0;
+    z-index: #{10 - $i};
+    animation-delay: 0#{$i}s;
+  }
+}
+
+.scrollbar {
+  @apply overflow-auto;
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-base-200) var(--color-base-0);
+
+  &:hover {
+    scrollbar-color: var(--color-base-400) var(--color-base-50);
+  }
+}
+
+.hamburger {
+  @apply z-10 inline-block w-5 cursor-pointer transition-all duration-300 ease-in-out;
+
+  .line {
+    @apply bg-base-800 my-1 block h-0.5 rounded-sm transition-all duration-300 ease-in-out;
+
+    &:nth-child(1),
+    &:nth-child(2) {
+      @apply w-full;
+    }
+    &:nth-child(3) {
+      @apply w-1/2;
+    }
+  }
+
+  @media only screen and (max-width: 768px) {
+    .line {
+      &:nth-child(1),
+      &:nth-child(3) {
+        @apply h-0.5 w-full;
+      }
+      &:nth-child(2) {
+        @apply w-0;
+      }
+      &:nth-child(1) {
+        @apply rotate-45;
+        --tw-translate-y: 0.35rem;
+      }
+      &:nth-child(3) {
+        @apply -rotate-45;
+        --tw-translate-y: -0.39rem;
+      }
+    }
+  }
+
+  &.active {
+    .line {
+      &:nth-child(1),
+      &:nth-child(3) {
+        @apply h-0.5 w-1/2;
+      }
+      &:nth-child(2) {
+        @apply h-0.5 w-full translate-x-0 transform;
+        --tw-translate-x: 1px;
+      }
+      &:nth-child(1) {
+        @apply w-4/6 translate-x-3 translate-y-0.5 rotate-45;
+        --tw-translate-y: 2px;
+      }
+      &:nth-child(3) {
+        @apply w-4/6 translate-x-3 -translate-y-0.5 -rotate-45;
+        --tw-translate-y: -2px;
+      }
+    }
+  }
+  @media only screen and (min-width: 767px) {
+    &:not(.active):hover .line {
+      &:nth-child(1) {
+        @apply animate-burger-hover-2;
+      }
+      &:nth-child(2) {
+        @apply animate-burger-hover-4;
+      }
+      &:nth-child(3) {
+        @apply animate-burger-hover-6;
+      }
+    }
+  }
+}
+
+svg {
+  fill: currentColor;
+  text {
+    @apply fill-base-800;
+  }
+}
+.flex-center {
+  @apply flex items-center gap-2;
+}

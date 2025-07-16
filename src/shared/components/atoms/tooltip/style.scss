@@ -1,0 +1,14 @@
+@reference "../../../../tailwind.css";
+
+.tooltip {
+  @apply bg-base-900 text-base-0 relative z-50 rounded px-3 py-1.5 whitespace-nowrap opacity-0 shadow;
+  transition: opacity 0.15s;
+
+  &-container {
+    @apply inline-block;
+  }
+
+  > .arrow {
+    @apply bg-base-900 absolute h-2.5 w-2.5;
+  }
+}
