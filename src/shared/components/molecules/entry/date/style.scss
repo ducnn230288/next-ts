@@ -1,0 +1,13 @@
+@reference "../../../../../tailwind.css";
+
+.entry-date {
+  @apply relative flex items-center gap-2;
+
+  > * {
+    @apply w-full;
+  }
+
+  .arrow {
+    @apply size-5 -rotate-90;
+  }
+}

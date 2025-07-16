@@ -1,0 +1,21 @@
+enum ETypeFilter {
+  IncludeText = 'includeText',
+  NotIncludeText = 'notIncludeText',
+  StartText = 'startText',
+  EndText = 'endText',
+  SameText = 'sameText',
+  SameDate = 'sameDate',
+  BeforeDate = 'beforeDate',
+  AfterDate = 'afterDate',
+  GreaterNumber = 'greaterNumber',
+  GreaterEqualNumber = 'greaterEqualNumber',
+  LessNumber = 'lessNumber',
+  LessEqualNumber = 'lessEqualNumber',
+  EqualNumber = 'equalNumber',
+  NotEqualNumber = 'notEqualNumber',
+  MiddleNumber = 'middleNumber',
+  NotMiddleNumber = 'notMiddleNumber',
+  Blank = 'blank',
+  NotBlank = 'notBlank',
+}
+export default ETypeFilter;

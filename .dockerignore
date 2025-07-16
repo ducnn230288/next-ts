@@ -1,0 +1,8 @@
+/.idea
+/.vscode
+/node_modules
+/prisma/.generated
+/.next
+/.husky
+/.docker
+.env
