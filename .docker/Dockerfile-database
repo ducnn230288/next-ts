@@ -1,0 +1,2 @@
+FROM library/postgres
+COPY prisma/migrations/20250719125601_initial/migration.sql /docker-entrypoint-initdb.d/
