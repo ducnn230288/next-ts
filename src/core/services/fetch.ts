@@ -198,6 +198,7 @@ export const serviceFetch = {
   }) => {
     // if (response.status === 401 && url !== C_API.AuthLogin) {
     //   localStorage.removeItem(KEY_TOKEN);
+    //   logout
     //   location.href =
     //     location.href.replace(location.hash, "") +
     //     location.hash.split("/").slice(0, 2).join("/") +

@@ -4,7 +4,7 @@ import Script from 'next/script';
 import '../shared/components/organisms/form/style.scss';
 import '../style.scss';
 import '../tailwind.css';
-import RootProvider from './provider';
+import ProviderRoot from './provider';
 
 export default function RootLayout({
   children,
@@ -42,7 +42,7 @@ export default function RootLayout({
       </head>
       <body>
         <NextIntlClientProvider>
-          <RootProvider>{children}</RootProvider>
+          <ProviderRoot>{children}</ProviderRoot>
         </NextIntlClientProvider>
       </body>
 
