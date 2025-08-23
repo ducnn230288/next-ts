@@ -1,13 +1,14 @@
 'use client';
-import { signIn } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useEffect } from 'react';
 
-import { translate } from '@/app/provider';
-import { serviceMessage } from '@/core/services';
+import { store } from '@/app/action';
+import { useRouter } from '@/core/lib/i18n/navigation';
+import { SGlobal, useAppSelector } from '@/core/stores';
 import { Button } from '@/shared/components/atoms';
 import { Form } from '@/shared/components/organisms';
-import { EFormRuleType, EFormType, ESize } from '@/shared/enums';
+import { C_LINK } from '@/shared/constants';
+import { EFormRuleType, EFormType, ESize, EStatusState } from '@/shared/enums';
 import type { TFieldForm, TFormFooter } from '@/shared/types';
 
 interface IRequestLogin {
@@ -40,27 +41,29 @@ const Component = () => {
     />
   );
 
-  const [stateForm, setStateForm] = useState({ isLoading: false });
-  const fnLogin = async (values: IRequestLogin) => {
-    setStateForm({ isLoading: true });
-    const result = await signIn('credentials', {
-      email: values.username,
-      password: values.password,
-      redirect: false,
-    });
-    setStateForm({ isLoading: false });
-    if (result?.error) {
-      serviceMessage.error({ content: translate('CredentialsSignin') });
-    } else {
-      window.location.href = result?.url ?? '/';
+  const navigate = useRouter();
+  const sGlobal = SGlobal();
+  const status = useAppSelector(state => state.status);
+  const isLoading = useAppSelector(state => state.isLoading);
+
+  useEffect(() => {
+    if (status === EStatusState.IsFulfilled) {
+      fnLoginSuccess();
     }
+  }, [status]);
+
+  const fnLoginSuccess = async () => {
+    await store('data?.token');
+    sGlobal.set({ status: EStatusState.Idle });
+    navigate.replace(C_LINK.Example);
   };
+
   return (
     <Form<IRequestLogin>
       isEnterSubmit={true}
-      isLoading={stateForm.isLoading}
+      isLoading={isLoading}
       fields={fields}
-      handleSubmit={({ value }) => fnLogin(value!)}
+      handleSubmit={({ value }) => sGlobal.postLogin(value!)}
       footer={renderFooter}
       translate={t}
     />

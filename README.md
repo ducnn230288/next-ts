@@ -5,13 +5,8 @@ This project is a modern Next.js application built with TypeScript, featuring Ho
 ## Features
 
 - ⚡️ Fast development with Next.js
-- 🔒 User authentication powered by `next-auth`
-- 🗄️ Prisma integration for database management (`prisma/schema.prisma`)
-- ✅ Schema validation and type inference with [Zod](https://zod.dev/)
-- 🔑 Password hashing and verification with [bcrypt](https://github.com/kelektiv/node.bcrypt.js)
-- 🛡️ Rate limiting with [`rate-limiter-flexible`](https://github.com/animir/node-rate-limiter-flexible) to protect APIs from brute-force attacks and excessive requests.
 - 🌐 Multi-language support using `next-intl`
-- 🐳 Docker support for development & production (`.docker/`)
+- 🐳 Docker support for production (`.docker/`)
 - 🎨 Tailwind CSS for rapid UI styling
 - 🗂️ Modular architecture with scientific Atomic Design (atoms, molecules, organisms, templates, pages)
 - 🗃️ Robust global state management powered by [Redux Toolkit](https://redux-toolkit.js.org/)
@@ -51,7 +46,7 @@ src/
     .constants/       # Page-level constants (API, links, forms, tables)
   core/               # Config, layouts, services, stores
     config/           # App-wide configuration (auth, theme, i18n)
-    lib/              # Shared libraries (i18n, prisma, messages)
+    lib/              # Shared libraries (i18n, messages)
     services/         # API, message, error handling
     stores/           # State management (global, api)
   shared/             # Reusable components, assets, constants, enums, models, types, utils
@@ -73,10 +68,6 @@ public/
   assets/             # Images, libraries, styles
   locales/            # Translation files (en, vi, ...)
   ...                 # Favicon, manifest, etc.
-prisma/               # Database management (Prisma)
-  schema.prisma       # Main Prisma schema file (models, relations)
-  seed.ts             # Script for seeding initial data
-  migrations/         # Migration files and history
 .docker/              # Docker config for dev & prod
 .e2e/                 # E2E test scripts, keywords, results
 ```
@@ -101,15 +92,7 @@ You can edit the main page by modifying `src/app/[locale]/(main)/page.tsx`. Chan
 
 ## Running with Docker
 
-You can also run the application using Docker for development or production:
-
-**Development:**
-
-```bash
-npm run docker:dev
-```
-
-This will start the development containers and automatically push and seed the database.
+You can also run the application using Docker for production:
 
 **Production:**
 
@@ -121,35 +104,11 @@ This will start the production containers.
 
 For custom setups, see the Dockerfiles and Compose files in the `.docker/` directory.
 
-## Prisma
-
-[Prisma](https://www.prisma.io/) is used for database management and ORM in this project.  
-It provides a type-safe way to interact with your database, manage schema migrations, and seed initial data.
-
-- `prisma/schema.prisma`: Defines your database models, fields, and relationships.
-- `prisma/migrations/`: Contains migration files and history, used to track and apply schema changes over time.
-- `prisma/seed.ts`: Script for seeding initial data into the database, useful for development and testing.
-
-**Common commands:**
-
-- Generate Prisma Client: `npm run db:generate`
-- Apply schema changes: `npm run db:push`
-- Seed database: `npm run db:seed`
-- Open Prisma Studio: `npm run db:studio`
-
-See the [Prisma documentation](https://www.prisma.io/docs/) for more details.
-
 ## Next.js internationalization (i18n)
 
 [next-intl](https://next-intl-docs.vercel.app/) provides internationalization (i18n) support for Next.js applications.  
 It enables you to easily manage translations, locale-based routing, and formatting for dates, numbers, and messages.  
 With next-intl, you can build multi-language apps with automatic locale detection and seamless language switching.
-
-## Authentication for Next.js
-
-[next-auth](https://next-auth.js.org/) is a flexible authentication solution for Next.js.  
-It supports multiple authentication providers (OAuth, email, credentials, etc.), session management, and secure user authentication flows.  
-You can easily integrate social logins, custom credentials, and manage user sessions with minimal configuration.
 
 ## ESLint & Code Quality
 

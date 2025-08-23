@@ -3,7 +3,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import LocaleData from 'dayjs/plugin/localeData';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
-import { SessionProvider as NextAuthSessionProvider } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useRef } from 'react';
 import { Provider } from 'react-redux';
@@ -35,10 +34,8 @@ const RootProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <Provider store={refStore.current}>
       <QueryClientProvider client={refQuery.current}>
-        <NextAuthSessionProvider>
-          <Dialog />
-          {children}
-        </NextAuthSessionProvider>
+        <Dialog />
+        {children}
       </QueryClientProvider>
     </Provider>
   );
