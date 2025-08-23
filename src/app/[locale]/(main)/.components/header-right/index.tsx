@@ -1,9 +1,11 @@
 'use client';
-import { signOut, useSession } from 'next-auth/react';
 import { useLocale, useTranslations } from 'next-intl';
 
+import { logout } from '@/app/action';
+import { useAppSelector } from '@/core/stores';
 import { Avatar, Icon } from '@/shared/components/atoms';
 import { Dropdown } from '@/shared/components/molecules';
+import { C_LINK } from '@/shared/constants';
 import { EIcon } from '@/shared/enums';
 import type { TOption } from '@/shared/types';
 
@@ -44,13 +46,13 @@ const HeaderRight = () => {
       label: 'SignOut',
       icon: EIcon.Out,
       onClick: async () => {
-        const data = await signOut({ redirect: false });
-        if (data?.url) window.location.href = '/login';
+        await logout();
+        window.location.href = C_LINK.AuthLogin;
       },
     },
   ];
 
-  const { data: session } = useSession();
+  const user = useAppSelector(state => state.user);
   return (
     <div className="right">
       <Dropdown options={listLanguage} translate={key => key}>
@@ -63,7 +65,7 @@ const HeaderRight = () => {
       </button>
       <Dropdown options={listMyProfile} translate={t}>
         <button title={t('MyInformation')}>
-          <Avatar text={session?.user?.email ?? ''} classSize={'size-7'} />
+          <Avatar src={user?.avatarUrl} text={user?.username ?? ''} classSize={'size-7'} />
         </button>
       </Dropdown>
     </div>

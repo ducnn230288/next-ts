@@ -18,7 +18,6 @@
     "d-biehl.robotcode",
     "SonarSource.sonarlint-vscode",
     "bradlc.vscode-tailwindcss",
-    "dsznajder.es7-react-js-snippets",
-    "Prisma.prisma"
+    "dsznajder.es7-react-js-snippets"
   ]
 }
