@@ -1,4 +1,4 @@
-import type { EDialog } from '@/shared/enums';
+import type { EDialog } from '@/shared/enum';
 
 /**
  * Represents an object of type TypeObject.

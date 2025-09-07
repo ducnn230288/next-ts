@@ -7,7 +7,8 @@ import { useTranslations } from 'next-intl';
 import { useEffect, useRef } from 'react';
 import { Provider } from 'react-redux';
 
-import setupStore from '@/core/stores';
+import serviceStorage from '@/core/service/storage';
+import setupStore from '@/core/store';
 import { Dialog } from '@/shared/components/molecules';
 dayjs.extend(LocalizedFormat);
 dayjs.extend(LocaleData);
@@ -17,6 +18,7 @@ export let translate: (key: string, params?: Record<string, string>) => string;
 const RootProvider = ({ children }: { children: React.ReactNode }) => {
   const t = useTranslations('Messages');
 
+  serviceStorage();
   // Setup store.
   const refStore = useRef<ReturnType<typeof setupStore> | null>(null);
   const refQuery = useRef<QueryClient | null>(null);

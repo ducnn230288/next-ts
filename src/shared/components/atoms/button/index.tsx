@@ -19,7 +19,7 @@ const Component = ({
   const classButton = classNames('btn', size, className, { line: isOutline });
   const render = () => (
     <>
-      {!!icon && <Icon name={icon} className={!size ? 'size-5' : 'size-3'} />}
+      {!!icon && <Icon name={icon} className={!size ? 'size-4' : 'size-3'} />}
       {text}
     </>
   );

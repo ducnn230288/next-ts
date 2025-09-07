@@ -1,0 +1,40 @@
+@reference "../../../../../tailwind.css";
+
+.entry-tag {
+  @apply border-base-300 bg-base-0 text-base-800 flex w-full flex-col gap-2 rounded-lg border px-4 py-0.5;
+
+  &.disabled {
+    @apply bg-base-200 cursor-not-allowed focus:shadow-none;
+  }
+
+  .tags-row {
+    @apply flex flex-wrap items-center gap-2;
+
+    .tag {
+      @apply bg-base-100 text-base-800 flex items-center rounded-lg px-2;
+
+      button {
+        @apply bg-base-400 text-base-0 ml-1 cursor-pointer rounded-full p-1;
+
+        svg {
+          @apply size-2;
+        }
+      }
+
+      &:first-child {
+        @apply -ml-2;
+      }
+    }
+
+    input {
+      @apply outline-0;
+
+      flex: 1;
+      height: calc(1.75rem - 2px);
+
+      &::placeholder {
+        @apply text-base-400;
+      }
+    }
+  }
+}

@@ -1,6 +1,7 @@
 'use client';
 import classNames from 'classnames';
 
+import type { TOption } from '@/shared/types';
 import Item from '../../../atoms/choice';
 import './style.scss';
 import type Props from './type';
@@ -11,12 +12,12 @@ const EntryChoice = ({
   value = [],
   handleChange,
   name = 'choice',
-  direction = 'column',
+  direction = 'row',
   className,
   type = 'checkbox',
 }: Props) => {
   const fnChange = (optionValue: string | number) => {
-    if (type === 'checkbox') {
+    if (type === 'checkbox' && Array.isArray(value)) {
       if (value.includes(optionValue)) {
         handleChange(value.filter(v => v !== optionValue));
       } else {
@@ -27,6 +28,9 @@ const EntryChoice = ({
     }
   };
 
+  const fnGetChecked = ({ option }: { option: TOption }) =>
+    Array.isArray(value) ? value?.includes(option.value) : value === option.value;
+
   return (
     <div className={classNames('choice-group', className)} style={{ flexDirection: direction }}>
       {options.map(option => (
@@ -36,7 +40,7 @@ const EntryChoice = ({
           value={option.value}
           label={option.label}
           disabled={!!disabled || !!option.disabled}
-          checked={value?.includes(option.value)}
+          checked={fnGetChecked({ option })}
           type={type}
           handleChange={() => fnChange(option.value)}
         />

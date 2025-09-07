@@ -1,3 +1,4 @@
+export * from './api';
 export * from './field';
 export * from './field-form';
 export * from './field-form-rule';
@@ -11,4 +12,8 @@ export * from './form-footer';
 export * from './mask';
 export * from './option';
 export * from './responses';
+export * from './table-action';
+export * from './table-body';
+export * from './table-header';
+export * from './table-pagination';
 export * from './table-state';

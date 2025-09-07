@@ -7,5 +7,6 @@ type Props<T> = Pick<FieldType<T>, 'formApi' | 'fieldForm' | 'Field'> & {
   readonly field: TField<T>;
   readonly state: TFieldState<T>;
   readonly translate: (key: string, options?: Record<string, string>) => string;
+  readonly values?: T;
 };
 export default Props;

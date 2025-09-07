@@ -8,6 +8,14 @@ RUN npm install
 
 # Copy source files and build Next.js in standalone mode
 COPY . .
+
+ARG NEXT_PUBLIC_URL_API
+ARG JWT_CSRF_TOKEN_EXPIRE_MINUTES
+
+ENV NEXT_PUBLIC_URL_API=$NEXT_PUBLIC_URL_API
+ENV JWT_CSRF_TOKEN_EXPIRE_MINUTES=$JWT_CSRF_TOKEN_EXPIRE_MINUTES
+ENV NODE_ENV=production
+
 RUN npm run build
 
 # Stage 2: Prepare the minimal runtime image

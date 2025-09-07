@@ -10,7 +10,7 @@
     "PleaseEnterOnlyNumber": "Please enter only number!",
     "PleaseEnterMinimumNumber": "Please enter minimum {min} number!",
     "PleaseEnterMaximumNumber": "Please enter maximum {max} number!",
-    "PleaseEnterOnlyText": "Please enter only text!",
+    "PleaseEnterUnderscore": "Please enter alphanumeric characters with underscores!",
     "PleaseEnterAtLeastCharacters": "Please enter at least {min} characters!",
     "PleaseEnterMaximumCharacters": "Please enter maximum {max} characters!",
     "PasswordNeedsToHaveAtLeast8Characters": "Password needs to have at least 8 characters, including at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character!",
@@ -64,7 +64,13 @@
     "Clear": "Clear",
     "Apply": "Apply",
     "NoSearchResultsFound": "No search results found.",
-    "Page": "Page"
+    "Page": "Page",
+    "PageSize": "Page size",
+    "Action": "Action",
+    "Edit": "Edit",
+    "Delete": "Delete",
+    "Detail": "Detail",
+    "ChangePassword": "Change Password"
   },
   "Messages": {
     "Success": "Success",
@@ -74,7 +80,7 @@
     "Warning": "Warning",
     "Confirmation": "Confirmation",
     "Save": "Save",
-    "CredentialsSignin": "Email or password is incorrect",
+    "RequestFailed": "Request failed. Please try again.",
     "Msg00001": "Successfully",
     "Msg00002": "Error occurred",
     "Msg00003": "User does not exist or has been disabled",
@@ -112,7 +118,7 @@
     "Msg00035": "Failed to delete user",
     "Msg00036": "Failed to obtain user detail",
     "Msg00037": "Failed to obtain user list",
-    "Msg00038": "Password has been reset",
+    "Msg00038": "Password has been changed successfully",
     "Msg00039": "Failed to reset password",
     "Msg00040": "Failed to update user"
   },
@@ -122,22 +128,53 @@
   },
   "Auth/Layout": {
     "AppName": "React App",
-    "EnterpriseManagementSystem": "Enterprise Management System",
-    "SignIn": "Sign In",
+    "EnterpriseManagementSystem": "Enterprise Management System"
+  },
+  "Auth/Login": {
+    "Title": "Sign In",
     "EnterYourDetailsToLoginToYourAccount": "Enter your details to login to your account",
     "Username": "Username",
     "Password": "Password",
     "LogIn": "Log In"
   },
   "Main/Layout": {
-    "AppName": "React App",
     "Footer": "React Company Ltd. ©{year}",
     "SignOut": "Sign out",
     "en": "English",
     "vi": "Vietnamese",
-    "RightSide": "Right Side",
+    "Header": "Header",
     "ChangeLanguage": "Change Language",
     "ChangeTheme": "Change Theme",
     "MyInformation": "My Information"
+  },
+  "Main/Sidebar": {
+    "Sidebar": "Sidebar",
+    "AppName": "React App",
+    "Dashboard": "Dashboard",
+    "Users": "Users"
+  },
+  "Main/Dashboard": {
+    "Title": "Dashboard"
+  },
+  "Main/User": {
+    "Title": "Users",
+    "Email": "Email",
+    "Username": "Username",
+    "Password": "Password",
+    "Role": "Role",
+    "Fullname": "Fullname",
+    "Phone": "Phone",
+    "Skills": "Skills",
+    "NewUser": "Add User",
+    "EditUser": "Edit User",
+    "ViewUser": "View User",
+    "Save": "Save",
+    "Update": "Update",
+    "Detail": "Detail",
+    "Admin": "Admin",
+    "User": "User",
+    "BackToList": "Back to List",
+    "ChangePassword": "Change Password",
+    "Description": "Description"
   }
 }

@@ -1,4 +1,4 @@
-import type { EIcon } from '@/shared/enums';
+import type { EIcon } from '@/shared/enum';
 
 type Props = {
   readonly name: EIcon; // Name of the icon ==> Required

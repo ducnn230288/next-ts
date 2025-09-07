@@ -98,7 +98,7 @@ Click select "${name}" with "${text}"
   Hover                     ${element}
   Hover                     ${element}
   Click                     ${element}
-  Click                     //*[contains(@class, "menu ")]//button[contains(text(),'${text}')]
+  Click                     //*[@aria-label="${name}"]//button[contains(text(),'${text}')]
   ${cnt}=                   Get Length                        ${text}
   IF  ${cnt} > 0
     Set Global Variable     ${STATE["${name}"]}              ${text}

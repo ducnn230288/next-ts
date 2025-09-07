@@ -6,5 +6,8 @@ import type { TOption } from '@/shared/types';
 type Props = {
   readonly options: TOption[];
   readonly translate: (key: string, options?: Record<string, string>) => string;
+  readonly isTree?: boolean;
+  readonly isCol?: boolean;
+  readonly isTranslate?: boolean;
 };
 export default Props;

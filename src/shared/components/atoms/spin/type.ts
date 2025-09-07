@@ -1,6 +1,6 @@
 import type { ReactNode, Ref } from 'react';
 
-import type { ESize } from '@/shared/enums';
+import type { ESize } from '@/shared/enum';
 
 type Props = {
   readonly isLoading?: boolean;

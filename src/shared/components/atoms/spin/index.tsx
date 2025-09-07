@@ -1,8 +1,8 @@
 'use client';
 import classNames from 'classnames';
-
-import { EIcon, ESize } from '@/shared/enums';
 import { useImperativeHandle, useRef } from 'react';
+
+import { EIcon, ESize } from '@/shared/enum';
 import Icon from '../icon';
 import './style.scss';
 import type Props from './type';

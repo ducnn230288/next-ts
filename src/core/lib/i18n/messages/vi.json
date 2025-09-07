@@ -10,7 +10,7 @@
     "PleaseEnterOnlyNumber": "Xin vui lòng chỉ nhập số!",
     "PleaseEnterMinimumNumber": "Xin vui lòng nhập số {min} tối thiểu!",
     "PleaseEnterMaximumNumber": "Xin vui lòng nhập số {max} đối đa!",
-    "PleaseEnterOnlyText": "Xin vui lòng nhập chỉ nhập chữ!",
+    "PleaseEnterUnderscore": "Xin vui lòng nhập ký tự chữ và số với dấu gạch dưới!",
     "PleaseEnterAtLeastCharacters": "Xin vui lòng nhập tối thiểu {min} ký tự!",
     "PleaseEnterMaximumCharacters": "Xin vui lòng nhập tối đa phải có {max} ký tự!",
     "PasswordNeedsToHaveAtLeast8Characters": "Mật khẩu yêu cầu có 8 ký tự trở lên, có ít nhất 1 chữ hoa, 1 chữ thường, 1 chữ số và 1 kí tự đặc biệt!",
@@ -64,7 +64,13 @@
     "Clear": "Xóa",
     "Apply": "Áp dụng",
     "NoSearchResultsFound": "Không tìm thấy kết quả tìm kiếm nào.",
-    "Page": "Trang"
+    "Page": "Trang",
+    "PageSize": "Kích thước trang",
+    "Action": "Hành động",
+    "Edit": "Chỉnh sửa",
+    "Delete": "Xóa",
+    "Detail": "Chi tiết",
+    "ChangePassword": "Đổi mật khẩu"
   },
   "Messages": {
     "Success": "Thành công",
@@ -72,9 +78,9 @@
     "Cancel": "Hủy bỏ",
     "Error": "Lỗi",
     "Warning": "Cảnh báo",
-    "Save": "Lưu lại",
     "Confirmation": "Xác nhận",
-    "CredentialsSignin": "Email hoặc mật khẩu không chính xác",
+    "Save": "Lưu lại",
+    "RequestFailed": "Yêu cầu không thành công. Vui lòng thử lại.",
     "Msg00001": "Thành công",
     "Msg00002": "Đã xảy ra lỗi",
     "Msg00003": "Người dùng không tồn tại hoặc đã bị vô hiệu hóa",
@@ -112,7 +118,7 @@
     "Msg00035": "Không xóa được người dùng",
     "Msg00036": "Không lấy được thông tin người dùng",
     "Msg00037": "Không lấy được danh sách người dùng",
-    "Msg00038": "Mật khẩu đã được đặt lại",
+    "Msg00038": "Mật khẩu đã được thay đổi thành công",
     "Msg00039": "Không đặt lại được mật khẩu",
     "Msg00040": "Không cập nhật được người dùng"
   },
@@ -122,22 +128,53 @@
   },
   "Auth/Layout": {
     "AppName": "React App",
-    "EnterpriseManagementSystem": "Nền tảng quản lý doanh nghiệp",
-    "SignIn": "Đăng nhập",
+    "EnterpriseManagementSystem": "Nền tảng quản lý doanh nghiệp"
+  },
+  "Auth/Login": {
+    "Title": "Đăng nhập",
     "EnterYourDetailsToLoginToYourAccount": "Nhập thông tin chi tiết của bạn để đăng nhập vào tài khoản của bạn",
     "Username": "Tên đăng nhập",
     "Password": "Mật khẩu",
     "LogIn": "Đăng nhập"
   },
   "Main/Layout": {
-    "AppName": "React App",
     "Footer": "Công ty cổ phần React. ©{year}",
     "SignOut": "Đăng xuất",
     "en": "Tiếng anh",
     "vi": "Tiếng việt",
-    "RightSide": "Bên phải",
+    "Header": "Đầu trang",
     "ChangeLanguage": "Thay đổi ngôn ngữ",
     "ChangeTheme": "Thay đổi chủ đề",
     "MyInformation": "Thông tin của tôi"
+  },
+  "Main/Sidebar": {
+    "Sidebar": "Thanh bên",
+    "AppName": "React App",
+    "Dashboard": "Bảng điều khiển",
+    "Users": "Người dùng"
+  },
+  "Main/Dashboard": {
+    "Title": "Bảng điều khiển"
+  },
+  "Main/User": {
+    "Title": "Người dùng",
+    "Email": "Email",
+    "Username": "Tên đăng nhập",
+    "Password": "Mật khẩu",
+    "Role": "Vai trò",
+    "Fullname": "Họ và tên",
+    "Phone": "Điện thoại",
+    "Skills": "Kỹ năng",
+    "NewUser": "Thêm người dùng",
+    "EditUser": "Chỉnh sửa người dùng",
+    "ViewUser": "Xem người dùng",
+    "Save": "Lưu",
+    "Update": "Cập nhật",
+    "Detail": "Chi tiết",
+    "Admin": "Quản trị viên",
+    "User": "Người dùng",
+    "BackToList": "Quay lại danh sách",
+    "ChangePassword": "Đổi mật khẩu",
+    "Description": "Mô tả"
   }
 }

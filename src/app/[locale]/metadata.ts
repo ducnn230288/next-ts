@@ -1,4 +1,4 @@
-import { C_METADATA } from '@/shared/constants';
+import { C_METADATA } from '@/shared/constant';
 import type { Metadata } from 'next';
 
 const metadata: Metadata = {

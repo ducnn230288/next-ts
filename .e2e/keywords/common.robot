@@ -15,7 +15,7 @@ ${URL_DEFAULT}          %{HOST_ADDRESS=http://localhost:3000/}
 ${STATE}                Evaluate  json.loads("""{}""")  json
 
 # Admin's default information #
-${USER_NAME}            %{USER_NAME=admin@gmail.com}
+${USER_NAME}            %{USER_NAME=admin}
 ${USER_PASSWORD}        %{USER_PASSWORD=Password1!}
 ${CURRENT_SECTION}      
 

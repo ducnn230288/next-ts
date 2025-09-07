@@ -1,6 +1,8 @@
-import type { ColumnDef, ColumnPinningState, FilterFn, Table } from '@tanstack/react-table';
+import type { ColumnDef, FilterFn, Table } from '@tanstack/react-table';
 import type { Virtualizer } from '@tanstack/react-virtual';
-import type { Ref, UIEvent } from 'react';
+import type { UIEvent } from 'react';
+
+import type { TTableAction, TTableBody, TTableHeader, TTablePagination } from '@/shared/types';
 
 /**
  * Represents the properties for the button component.
@@ -12,33 +14,11 @@ type Props<TData> = {
   readonly columns: ColumnDef<TData>[];
   readonly data?: TData[];
   readonly handleChange?: (table: Table<TData>) => void;
+  readonly handleSort?: (sort: string[]) => void;
   readonly filterGlobal?: FilterFn<TData>;
-  readonly header?: {
-    readonly width?: number;
-    readonly maxWidth?: number;
-    readonly pinning?: ColumnPinningState;
-    readonly isNotResizing?: boolean;
-    readonly isNotRightClick?: boolean;
-  };
-  readonly body?: {
-    readonly isExpanded?: boolean;
-    readonly height?: number;
-    readonly ids?: string[];
-    readonly handleDoubleClick?: (id: string) => void;
-    readonly handleClick?: (props: { ids: string[]; id: string }) => void;
-    readonly checkbox?: {
-      readonly handleChange?: (ids: string[]) => void;
-      readonly width?: number;
-      readonly isAsynchronous?: boolean;
-    };
-  };
-  readonly pagination?: {
-    readonly total?: number;
-    readonly perPage?: number;
-    readonly page?: number;
-    readonly handleChange?: (props: { page: number; perPage: number }) => void;
-    readonly description?: (from: number, to: number, total: number) => string;
-  };
+  readonly header?: TTableHeader;
+  readonly body?: TTableBody;
+  readonly pagination?: TTablePagination;
 
   readonly keyId: keyof TData;
   readonly className?: string;
@@ -50,7 +30,7 @@ type Props<TData> = {
     readonly event: UIEvent<HTMLDivElement>;
   }) => void;
   readonly translate: (key: string, options?: Record<string, string>) => string;
-  readonly ref?: Ref<Table<TData> | undefined>;
   readonly firstItem?: React.JSX.Element;
+  readonly action?: TTableAction<TData>;
 };
 export default Props;

@@ -17,7 +17,7 @@ const EntryTextarea = ({
   handleChange,
   handlePressEnter,
 }: Props) => {
-  const [stateEntryTextarea, setStateEntryTextarea] = useState({ length: value.length || 0 });
+  const [stateEntryTextarea, setStateEntryTextarea] = useState({ length: value?.length || 0 });
 
   const fnChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     if (maxLength) setStateEntryTextarea({ length: e.target.value.length });
@@ -39,7 +39,7 @@ const EntryTextarea = ({
         name={name}
         className={classNames('entry', { disabled: disabled })}
         disabled={disabled}
-        value={value}
+        value={value ?? ''}
         placeholder={placeholder}
         maxLength={maxLength}
         rows={rows}

@@ -1,7 +1,7 @@
 import type { Virtualizer } from '@tanstack/react-virtual';
 
 import type DataGridProps from '../../type';
-import type CommonProps from '../../utils/type';
+import type CommonProps from '../../util/type';
 
 type Props<TData> = Pick<
   CommonProps<TData>,

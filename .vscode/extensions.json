@@ -1,5 +1,9 @@
 {
   "recommendations": [
+    "ritwickdey.LiveServer",
+    "ms-playwright.playwright",
+    "bierner.markdown-preview-github-styles",
+    "bierner.markdown-mermaid",
     "formulahendry.auto-close-tag",
     "formulahendry.auto-rename-tag",
     "aaron-bond.better-comments",
@@ -15,7 +19,6 @@
     "oderwat.indent-rainbow",
     "PKief.material-icon-theme",
     "esbenp.prettier-vscode",
-    "d-biehl.robotcode",
     "SonarSource.sonarlint-vscode",
     "bradlc.vscode-tailwindcss",
     "dsznajder.es7-react-js-snippets"

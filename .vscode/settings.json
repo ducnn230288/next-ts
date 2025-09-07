@@ -1,9 +1,15 @@
 {
+  "files.exclude": {
+    ".husky": true,
+    ".next": true,
+    "node_modules": true,
+    ".docker": true,
+    ".github": true
+  },
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.patterns": {
-    "tsconfig.json": "tsconfig.*.json, env.d.ts, .env, .env.sampe",
-    "next.config.*": "jsconfig*, vitest.config.*, cypress.config.*, playwright.config.*,  .eslint*, eslint*, .prettier*, prettier*, .editorconfig, commitlint.config.cjs, postcss.config.mjs, .gitignore, .dockerignore",
-    "package.json": "package-lock.json, pnpm*, .yarnrc*, yarn*"
+    "README.md*": "next.config.ts, jsconfig*, vitest.config.*, cypress.config.*, playwright.config.*,  .eslint*, eslint*, .prettier*, prettier*, .editorconfig, commitlint.config.cjs, postcss.config.mjs, .gitignore, .dockerignore",
+    "package.json": "package-lock.json, pnpm*, .yarnrc*, yarn*, tsconfig.json, tsconfig.*.json, env.d.ts, .env, .env.example, next-env.d.ts"
   },
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit"

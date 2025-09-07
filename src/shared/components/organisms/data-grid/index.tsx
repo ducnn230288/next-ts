@@ -1,22 +1,24 @@
 'use client';
 import type { AccessorKeyColumnDef, CellContext, ColumnDef, Table } from '@tanstack/react-table';
 import { useLocale } from 'next-intl';
-import { useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
+import { type Ref, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 
 import Spin from '../../atoms/spin';
 import './style.scss';
 import DataTable from './table';
-import Template from './templates';
+import Template from './template';
 import type Props from './type';
-import utils from './utils';
+import utils from './util';
 
 const DataGrid = <TData,>({
   isLoading,
   handleExpand,
+  action,
 
   columns,
   data,
   handleChange,
+  handleSort,
   filterGlobal,
   header,
   body,
@@ -29,7 +31,9 @@ const DataGrid = <TData,>({
 
   ref,
   firstItem,
-}: Props<TData>) => {
+}: Props<TData> & {
+  readonly ref?: Ref<{ table?: Table<TData>; pageSize?: number }>;
+}) => {
   const refOuterDiv = useRef<{ element: HTMLDivElement | null }>(null);
   const [stateDataGrid, setStateDataGrid] = useState<{ columns?: ColumnDef<TData>[] }>({});
   const fnUpdateColumns = () => {
@@ -49,6 +53,23 @@ const DataGrid = <TData,>({
             header: Template.CheckboxHeader,
             cell: Template.CheckboxCell,
             meta: { isHeaderHide: true },
+          });
+        }
+
+        if (
+          action?.label &&
+          originalColumns.filter(item => item.id === '___ACTION___').length === 0
+        ) {
+          originalColumns.push({
+            id: '___ACTION___',
+            header: '',
+            size: 32,
+            meta: {
+              isHeaderHide: true,
+            },
+            cell: (prop: CellContext<TData, unknown>) => (
+              <Template.ActionCell {...prop} action={action} />
+            ),
           });
         }
 
@@ -89,41 +110,46 @@ const DataGrid = <TData,>({
   const maxSize =
     header?.maxWidth ?? refOuterDiv.current?.element?.getBoundingClientRect().width ?? 1200;
   const pageSize =
-    pagination?.perPage ??
+    pagination?.page_size ??
     (refOuterDiv.current?.element &&
       utils.getSizePageByHeight({ height: body?.height, element: refOuterDiv.current.element })) ??
     0;
 
   const refTable = useRef<Table<TData>>(undefined);
-  useImperativeHandle(ref, () => refTable.current);
+  useImperativeHandle(ref, () => ({ table: refTable.current, pageSize: pageSize }));
 
-  return useMemo(
-    () => (
-      <Spin isLoading={!!isLoading} className="data-grid" ref={refOuterDiv}>
-        {!!stateDataGrid.columns && !!data && (
-          <DataTable<TData>
-            ref={refTable}
-            data={data}
-            columns={stateDataGrid.columns}
-            isFilter={isFilter}
-            maxSize={maxSize}
-            pageSize={pageSize}
-            body={body}
-            header={header}
-            filterGlobal={filterGlobal}
-            pagination={pagination}
-            keyId={keyId}
-            firstItem={firstItem}
-            className={className}
-            defaultColumn={defaultColumn}
-            translate={translate}
-            handleScroll={handleScroll}
-            handleChange={fnOnChange}
-          />
-        )}
-      </Spin>
-    ),
-    [data, stateDataGrid],
+  const memoizedTable = useMemo(() => {
+    if (!!stateDataGrid.columns && !!data) {
+      return (
+        <DataTable<TData>
+          ref={refTable}
+          data={data}
+          columns={stateDataGrid.columns}
+          isFilter={isFilter}
+          maxSize={maxSize}
+          pageSize={pageSize}
+          body={body}
+          header={header}
+          filterGlobal={filterGlobal}
+          pagination={pagination}
+          keyId={keyId}
+          firstItem={firstItem}
+          className={className}
+          defaultColumn={defaultColumn}
+          translate={translate}
+          handleScroll={handleScroll}
+          handleChange={fnOnChange}
+          handleSort={handleSort}
+        />
+      );
+    }
+    return null;
+  }, [data, stateDataGrid]);
+
+  return (
+    <Spin isLoading={!!isLoading} className="data-grid" ref={refOuterDiv}>
+      {memoizedTable}
+    </Spin>
   );
 };
 export default DataGrid;

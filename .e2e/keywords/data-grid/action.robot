@@ -18,3 +18,10 @@ Drag to resize "${name}" column
 Get Element Header By Name
   [Arguments]                   ${name}                                                   ${xpath}=${EMPTY}
   RETURN                        ${CURRENT_SECTION}//thead//th[@aria-label = "${name}"][1]${xpath}
+
+Click on the "${text}" button in the "${name}" line
+  ${name}=                  Check Text                        ${name}
+  ${text}=                  Check Text                        ${text}
+  ${element}=               Get Element Item By Name          ${name}                       //button[@title = "Action"]
+  Click                     ${element}
+  Click the "${text}" drop-down menu

@@ -3,8 +3,8 @@ import classNames from 'classnames';
 import IMask, { type InputMask } from 'imask';
 import { useImperativeHandle, useRef } from 'react';
 
-import { C_MASK } from '@/shared/constants';
-import { isNumeric } from '@/shared/utils';
+import { C_MASK } from '@/shared/constant';
+import { isNumeric } from '@/shared/util';
 import Icon from '../../../atoms/icon';
 import type Props from './type';
 

@@ -1,17 +1,14 @@
-import type { C_API } from '../constants';
-import type { TOption } from './option';
+import type { C_API } from '../constant';
 
 /**
  * Represents the configuration options for retrieving data from a table.
  */
-export type TApi<T> = {
+export type TApi = {
   readonly keyApi?: keyof typeof C_API;
-  readonly method?: string;
-  readonly format?: (item: T) => TOption;
+  readonly format?: { value: string; label: string };
   readonly params?: (props: {
-    fullTextSearch: string;
+    full_text: string;
     value?: unknown | null;
   }) => Record<string, unknown>;
-  readonly data?: () => T;
-  readonly keepUnusedDataFor?: number;
+  readonly staleTime?: number;
 };

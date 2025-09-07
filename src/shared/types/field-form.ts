@@ -1,7 +1,7 @@
-import type { DeepKeys, DeepValue } from '@tanstack/react-form';
+import type { DeepKeys } from '@tanstack/react-form';
 
-import type { EFormType, EIcon } from '@/shared/enums';
-import type { C_MASK } from '../constants/mask';
+import type { EFormType, EIcon } from '@/shared/enum';
+import type { C_MASK } from '../constant/mask';
 import type { TApi } from './api';
 import type { TFieldFormRule } from './field-form-rule';
 import type { TFlatten } from './flatten';
@@ -14,20 +14,15 @@ import type { TOption } from './option';
 export type TFieldForm<T> = {
   readonly name: keyof TFlatten<T>;
   readonly title: string;
-  readonly type: EFormType | null;
+  readonly type?: EFormType;
   readonly col?: number;
-  readonly condition?: (props: {
-    readonly value?: unknown;
-    readonly index: number;
-    readonly values?: T;
-  }) => boolean;
+  readonly isShow?: boolean;
   readonly rules?: TFieldFormRule<T>[];
-  readonly disabled?: (props: { value?: DeepValue<T, DeepKeys<T>> }) => boolean;
+  readonly isDisabled?: boolean;
   readonly placeholder?: string;
   readonly onChange?: (props: { value: unknown }) => void;
   readonly onBlur?: (props: { value: string; formApi: TForm<T>; name: DeepKeys<T> }) => void;
-  readonly notDefaultValid?: boolean;
-  readonly convert?: (data: { value?: unknown; values: T }) => never;
+  readonly isDefaultValid?: boolean;
   readonly maxLength?: number;
 
   readonly text?: {
@@ -41,5 +36,16 @@ export type TFieldForm<T> = {
   };
   readonly options?: TOption[];
   readonly isMultiple?: boolean;
-  readonly api?: TApi<T>;
+  readonly api?: TApi;
+  readonly fields?: TFieldForm<T>[];
+  readonly addable?: {
+    readonly isLabel?: boolean;
+    readonly isAdd?: boolean;
+    readonly className?: string;
+  };
+  readonly select?: {
+    readonly isTranslate?: boolean;
+  };
+  readonly customize?: (props: { values?: T }) => React.JSX.Element;
+  readonly dynamicType?: (props: { values?: T }) => EFormType;
 };

@@ -1,3 +1,5 @@
+import type { DeepKeys } from '@tanstack/react-form';
+
 import type { TFieldForm, TForm, TFormField } from '@/shared/types';
 
 /**
@@ -9,6 +11,8 @@ type Props<T> = {
   readonly Field: TFormField<T>;
   readonly isLabel?: boolean;
   readonly translate: (key: string, options?: Record<string, string>) => string;
+  readonly name: DeepKeys<T>;
+  readonly values?: T;
 };
 
 export default Props;

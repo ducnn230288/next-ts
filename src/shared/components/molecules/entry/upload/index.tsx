@@ -4,11 +4,10 @@ import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import { serviceFetch, serviceMessage } from '@/core/services';
-import { KEY_TOKEN } from '@/shared/constants';
-import { EIcon, ESize } from '@/shared/enums';
+import { serviceFetch, serviceMessage } from '@/core/service';
+import { EIcon, ESize } from '@/shared/enum';
 import type { TFile } from '@/shared/types';
-import { arrayMove } from '@/shared/utils';
+import { arrayMove } from '@/shared/util';
 import Button from '../../../atoms/button';
 import Icon from '../../../atoms/icon';
 import Image from '../../../atoms/image';
@@ -163,7 +162,6 @@ const EntryUpload = ({
             method,
             body: bodyFormData,
             headers: {
-              authorization: 'Bearer ' + (localStorage.getItem(KEY_TOKEN) ?? ''),
               'Accept-Language': localStorage.getItem('i18nextLng') ?? '',
             },
           },

@@ -1,6 +1,5 @@
-import ExampleDataGrid from './data-grid';
-import HeaderRight from './header-right';
-import ExampleRowVirtualizer from './row-virtualizer';
+import Header from './header';
+import Sidebar from './sidebar';
 
-const components = { HeaderRight, ExampleRowVirtualizer, ExampleDataGrid };
+const components = { Header, Sidebar };
 export default components;

@@ -49,6 +49,9 @@ input.entry {
 textarea.entry {
   @apply border-base-300 bg-base-0 w-full px-4 py-2.5;
 
+  &.disabled {
+    @apply bg-base-200 cursor-not-allowed focus:shadow-none;
+  }
   &::placeholder {
     @apply text-base-400;
   }

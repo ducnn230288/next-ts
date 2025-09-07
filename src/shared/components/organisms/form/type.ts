@@ -8,6 +8,7 @@ type Props<T> = {
   readonly fields: TFieldForm<T>[];
   readonly isLoading?: boolean;
   readonly isEnterSubmit?: boolean;
+  readonly isLabel?: boolean;
   readonly handleSubmit?: (props: { value?: T; formApi: TForm<T> }) => void;
   readonly footer?: (props: TFormFooter<T>) => React.JSX.Element;
   readonly isInline?: boolean;

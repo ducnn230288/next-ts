@@ -1,4 +1,4 @@
-import type { EIcon } from '../enums';
+import type { EIcon } from '../enum';
 
 /**
  * Represents an item in a table filter list.

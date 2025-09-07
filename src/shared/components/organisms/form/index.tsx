@@ -1,14 +1,14 @@
 'use client';
 import { useForm } from '@tanstack/react-form';
 import classNames from 'classnames';
-import { useEffect, useImperativeHandle, useRef, type FormEventHandler } from 'react';
+import { useEffect, useImperativeHandle, useState, type FormEventHandler } from 'react';
 
-import { EFormType } from '@/shared/enums';
+import { EFormType } from '@/shared/enum';
 import type { TFieldForm } from '@/shared/types';
 import Spin from '../../atoms/spin';
 import FormField from './field';
 import type Props from './type';
-import utils from './utils';
+import utils from './util';
 
 /**
  * A custom form component.
@@ -19,22 +19,23 @@ const Component = <T,>({
   values,
   isLoading,
   isEnterSubmit,
+  isLabel = true,
   isInline,
   translate,
   handleSubmit,
   footer,
   ref,
 }: Props<T>) => {
-  const refOldValue = useRef(values);
+  const [stateForm, setStateForm] = useState({ values });
   useEffect(() => {
-    if (JSON.stringify(refOldValue.current) !== JSON.stringify(values) && !isLoading) {
+    if (JSON.stringify(stateForm.values) !== JSON.stringify(values) && !isLoading) {
+      setStateForm(old => ({ ...old, values: { ...(values ?? {}) } as T }));
       form.reset(utils.convertValueForm({ fields, values }));
     }
-    refOldValue.current = values;
   }, [values]);
 
   const form = useForm({
-    defaultValues: utils.convertValueForm<T>({ fields, values }),
+    defaultValues: utils.convertValueForm<T>({ fields, values: { ...(values ?? {}) } as T }),
     onSubmit: ({ value, formApi }) =>
       handleSubmit?.({
         value: utils.convertValueForm<T>({ fields, values: { ...value }, isExport: true }),
@@ -60,7 +61,7 @@ const Component = <T,>({
         <form className={classNames('form', { inline: isInline }, className)} onSubmit={fnSubmit}>
           {isEnterSubmit && <input type="submit" hidden />}
           {fields
-            .filter((fieldForm, index) => utils.fnCondition<T>({ fieldForm, index, values }))
+            .filter(fieldForm => utils.condition<T>({ fieldForm }))
             .map((fieldForm, index) => (
               <div
                 data-item="true"
@@ -69,8 +70,11 @@ const Component = <T,>({
                 <FormField<T>
                   fieldForm={fieldForm}
                   formApi={form}
+                  isLabel={isLabel}
                   Field={form.Field}
                   translate={translate}
+                  name={fieldForm.name}
+                  values={stateForm.values}
                 />
               </div>
             ))}

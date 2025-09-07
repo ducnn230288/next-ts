@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import dayjs, { type Dayjs } from 'dayjs';
 import { useEffect, useState } from 'react';
 
-import { EIcon } from '@/shared/enums';
+import { EIcon } from '@/shared/enum';
 import Icon from '../icon';
 import './style.scss';
 import type Props from './type';

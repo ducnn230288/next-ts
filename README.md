@@ -1,5 +1,53 @@
 # Next.js + TypeScript Starter
 
+```mermaid
+flowchart TD
+    A[App Entry] --> R[Router]
+    R --> C[Core]
+    R --> M[App Router]
+    C --> M
+
+    subgraph C [Core]
+        direction TB
+        C1[Config]
+        C2[Lib]
+        C3[Service]
+        C4[Store]
+    end
+
+    subgraph M [App Router]
+        direction TB
+        M1[Dashboard]
+
+        subgraph M1 [Dashboard]
+          direction TB
+          M1D[.constant] --> M1F[Pages]
+        end
+
+        subgraph M2 [Login]
+          direction TB
+          M2D[.constant] --> M2C[.components] --> M2F[Pages]
+          M2E[.interface] --> M2C
+        end
+
+        subgraph M3 [User]
+          direction TB
+          M3D[.constant] --> M3C[.components] --> M3F[Pages]
+        end
+    end
+
+    subgraph S [Shared]
+        direction TB
+        S1[Assets] --> S2[Components]
+        S5[Type & Model] --> S2
+        S3[Constant & Enum] --> S4[Util]
+        S3 --> S2
+    end
+
+    S --> C
+    S --> M
+```
+
 This project is a modern Next.js application built with TypeScript, featuring Hot Module Replacement (HMR), ESLint, Tailwind CSS, Redux Toolkit for state management, TanStack plugins, and a modular folder structure for scalable development.
 
 ## Features

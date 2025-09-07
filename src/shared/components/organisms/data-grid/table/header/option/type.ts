@@ -2,7 +2,7 @@ import type { Header } from '@tanstack/react-table';
 import type { VirtualItem } from '@tanstack/react-virtual';
 
 import type DataGridProps from '../../../type';
-import type CommonProps from '../../../utils/type';
+import type CommonProps from '../../../util/type';
 
 /**
  * Represents the properties for the button component.

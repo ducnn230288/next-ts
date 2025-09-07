@@ -1,0 +1,117 @@
+import type { Html5QrcodeResult } from 'html5-qrcode';
+import { Html5Qrcode } from 'html5-qrcode';
+
+export class BarcodeQrScanner {
+  private scanner: Html5Qrcode | null = null;
+  private readonly scannerId: string;
+  public cameraList: MediaDeviceInfo[] = [];
+
+  constructor(scannerId?: string) {
+    if (scannerId) {
+      this.scannerId = scannerId;
+    } else {
+      const div = document.createElement('div');
+      div.id = this.generateTimestampId('reader');
+      div.style.position = 'absolute !important';
+      div.style.left = '-10000%';
+      div.style.top = '-1000%';
+      document.body.appendChild(div);
+      this.scannerId = div.id;
+    }
+  }
+
+  private readonly generateTimestampId = (prefix: string = 'reader'): string => {
+    const timestamp = Date.now().toString(36);
+    const random = Math.random().toString(36).substring(2, 8);
+    return `${prefix}_${timestamp}_${random}`;
+  };
+
+  private readonly onScanSuccess = (
+    decodedText: string,
+    decodedResult: Html5QrcodeResult,
+  ): void => {
+    this.handleScanComplete(decodedText, decodedResult);
+    this.restart();
+  };
+
+  public handleScanComplete = (_: string, __: Html5QrcodeResult): void => {};
+  private readonly onScanFailure = (): void => {};
+
+  private async requestCameraPermission(): Promise<boolean> {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      for (const track of stream.getTracks()) {
+        track.stop(); // Stop the stream immediately
+      }
+
+      // Get a list of devices
+      const devices = await navigator.mediaDevices.enumerateDevices();
+
+      // Filter only cameras (video input)
+      this.cameraList = devices.filter(device => device.kind === 'videoinput');
+
+      return true;
+    } catch {
+      alert('Camera permission denied. Please allow camera access to scan codes.');
+      return false;
+    }
+  }
+
+  public async initialize(): Promise<void> {
+    const hasPermission = await this.requestCameraPermission();
+    if (!hasPermission) return;
+
+    this.scanner = new Html5Qrcode(this.scannerId);
+
+    // Auto-start camera immediately
+    const cameras = await Html5Qrcode.getCameras();
+    if (cameras && cameras.length > 0) {
+      const cameraId = cameras.at(-1)!.id; // Use last available camera
+
+      await this.scanner.start(
+        cameraId,
+        {
+          fps: 10,
+          qrbox: { width: 350, height: 250 },
+          aspectRatio: 1.777778,
+        },
+        this.onScanSuccess,
+        this.onScanFailure,
+      );
+    }
+  }
+
+  public async stop(): Promise<void> {
+    if (this.scanner?.isScanning) {
+      await this.scanner.stop();
+    }
+  }
+
+  public async restart(): Promise<void> {
+    await this.stop();
+    setTimeout(async () => {
+      await this.initialize();
+    }, 500);
+  }
+
+  public async destroy(): Promise<void> {
+    await this.stop();
+    this.scanner = null;
+  }
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const scanner = new BarcodeQrScanner();
+  await scanner.initialize();
+  scanner.handleScanComplete = (decodedText: string, decodedResult: Html5QrcodeResult): void => {
+    const formatInfo = decodedResult.result?.format?.formatName || 'Unknown';
+    let formatType = `📊 ${formatInfo}`;
+
+    if (formatInfo.includes('128')) formatType = '🎯 Code 128';
+    else if (formatInfo.includes('QR')) formatType = '📱 QR Code';
+
+    alert(`${formatType} scanned!\nCode: ${decodedText}`);
+    console.log('Scanned code:', decodedText);
+    console.log('Scan result object:', decodedResult);
+  };
+});

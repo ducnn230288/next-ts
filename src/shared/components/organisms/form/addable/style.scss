@@ -1,0 +1,23 @@
+@reference "../../../../../tailwind.css";
+.addable {
+  .flex > {
+    .grid {
+      @apply grow grid-cols-12 gap-x-5;
+    }
+
+    .group-button {
+      @apply mt-2 flex items-start gap-2 pl-2;
+
+      svg {
+        @apply size-5;
+      }
+
+      .delete svg {
+        @apply text-error-500 hover:text-error-300;
+      }
+    }
+  }
+}
+.c-form > * > .ant-spin-container .addable .item .svg-error {
+  @apply top-4;
+}

@@ -21,6 +21,22 @@
         }
       }
     }
+
+    &.tree {
+      > li {
+        > button:has(+ ul):after {
+          @apply rotate-90;
+        }
+        > ul {
+          @apply visible static mt-0 w-full pl-7 opacity-100 shadow-none;
+        }
+        &:hover {
+          > ul {
+            @apply visible opacity-100;
+          }
+        }
+      }
+    }
   }
   li {
     @apply relative;
@@ -47,7 +63,7 @@
       &:has(+ ul) {
         @apply pr-5;
         &::after {
-          @apply bg-base-800 absolute top-2.5 right-0 size-3.5 rotate-90 bg-cover;
+          @apply bg-base-800 absolute top-1/2 right-2 size-3.5 -translate-y-1/2 rotate-90 bg-cover;
           content: '';
           mask: url('/assets/images/arrow.svg') no-repeat 100% 100%;
           mask-size: cover;

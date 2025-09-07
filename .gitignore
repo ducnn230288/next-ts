@@ -40,3 +40,13 @@ next-env.d.ts
 package-lock.json
 /prisma/.generated
 .e2e/result
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/settings.json
+!.vscode/tasks.json
+
+# Playwright
+tests/test-results
+tests/playwright-report
+tests/blob-report

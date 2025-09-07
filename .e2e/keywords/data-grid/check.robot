@@ -70,3 +70,13 @@ Check the "${name}" column resizing
   When Click the "Reset size" drop-down menu
   ${width_reset}=             Get Style    ${element}    width
   Should Be Equal             ${width_old}    ${width_reset}
+
+"${name}" should be "${status}" in the line
+  Wait Until Element Spin
+  ${name}=                  Check Text                         ${name}
+  ${element}=               Set Variable                       ${CURRENT_SECTION}//*[@data-item]//*[(text()="${name}")]
+  IF          "${status}" == "visible"
+      Wait Until Element Is Existent                           ${element}
+  ELSE IF     "${status}" == "hidden"
+    Wait Until Page Does Not Contain Element                   ${element}                            result_format=%d-%m-%Y
+  END

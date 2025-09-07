@@ -1,9 +1,9 @@
 'use client';
 import classNames from 'classnames';
+import { useTranslations } from 'next-intl';
 import { useRef } from 'react';
 
-import { EIcon } from '@/shared/enums';
-import { useTranslations } from 'next-intl';
+import { EIcon } from '@/shared/enum';
 import Icon from '../../atoms/icon';
 import EntrySelect from '../entry/select';
 import './style.scss';
@@ -17,7 +17,7 @@ type TPagination = { disabled: boolean; type: string; index: number };
 const Component = ({
   total = 4,
   page = 1,
-  perPage = 10,
+  page_size = 10,
   description = (from: number, to: number, total: number) =>
     from + '-' + to + ' of ' + total + ' items',
   handleChange,
@@ -25,14 +25,14 @@ const Component = ({
   const t = useTranslations('Components');
 
   const pageSizeOptions = useRef(
-    [perPage, Math.trunc(perPage * 1.5), Math.trunc(perPage * 2.5)].map(item => ({
+    [page_size, Math.trunc(page_size * 1.5), Math.trunc(page_size * 2.5)].map(item => ({
       value: item,
       label: item.toString(),
     })),
   );
 
-  const ranges = [(page - 1) * perPage + 1, Math.min(page * perPage, total)];
-  const lastIndex = Math.ceil(total / perPage);
+  const ranges = [(page - 1) * page_size + 1, Math.min(page * page_size, total)];
+  const lastIndex = Math.ceil(total / page_size);
 
   const fnMergeWithPrevNextButtons = (
     listOfPage: { index: number; type: string; disabled: boolean }[],
@@ -77,8 +77,8 @@ const Component = ({
   };
   const paginationItems = fnGeneratePaginationItems(page, lastIndex);
 
-  const fnPerPageChange = (value: string | number) =>
-    handleChange?.({ perPage: (value ?? 0) as number, page: page });
+  const fnPageSizeChange = (value: string | number) =>
+    handleChange?.({ page_size: (value ?? 0) as number, page: page });
 
   const fnPageChange = ({ type, index }: { type: string; index: number }) => {
     switch (type) {
@@ -97,7 +97,7 @@ const Component = ({
       default:
     }
     if (index > 0) {
-      handleChange?.({ perPage, page: index });
+      handleChange?.({ page_size, page: index });
     }
   };
 
@@ -106,10 +106,11 @@ const Component = ({
       <div className={'pagination'}>
         <div className={'left'}>
           <EntrySelect
-            value={perPage}
+            title={t('PageSize')}
+            value={page_size}
             options={pageSizeOptions.current}
             translate={text => text + ' / ' + t('Page').toLowerCase()}
-            handleChange={fnPerPageChange}
+            handleChange={fnPageSizeChange}
           />
           <div className="whitespace-nowrap">{description(ranges[0], ranges[1], total)}</div>
         </div>

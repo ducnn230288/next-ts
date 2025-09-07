@@ -4,7 +4,7 @@
  */
 .data-grid {
   .c-virtual-scroll {
-    @apply min-h-96 w-full;
+    @apply min-h-32 w-full;
 
     .empty {
       @apply text-base-400 absolute top-0 left-0 flex h-full w-full flex-col items-center justify-center gap-2;
@@ -12,21 +12,22 @@
 
     .round-checkbox {
       .row-selection {
-        @apply opacity-0;
+        @apply pointer-events-none;
 
-        .ant-checkbox {
-          .ant-checkbox-inner,
-          .ant-checkbox-inner:after {
+        .checkbox {
+          @apply rounded-2xl opacity-0;
+
+          &.indeterminate::before {
             @apply rounded-2xl;
           }
-        }
 
-        &.ant-checkbox-wrapper-checked {
-          @apply opacity-100;
+          &.checked {
+            @apply opacity-100;
+          }
         }
       }
 
-      &:hover .row-selection {
+      &:hover .row-selection .checkbox {
         @apply opacity-100;
       }
     }
@@ -97,9 +98,10 @@
           @apply bg-primary-50/50;
         }
         td {
-          @apply bg-base-0 border-primary-50/80 flex min-w-11 items-center border-b px-1;
+          @apply bg-base-0 border-primary-50/80 flex min-w-8 items-center border-b px-1;
           > div {
             @apply w-full truncate;
+            height: inherit;
           }
           svg {
             @apply transition-all;

@@ -5,16 +5,16 @@ import Icon from '../icon';
 import './style.scss';
 import type Props from './type';
 
-const Component = ({ options, translate }: Props) => {
+const Component = ({ options, translate, isTree, isCol = true, isTranslate = true }: Props) => {
   const mapList = ({ option }: { option: TOption }) => (
     <li key={option.value}>
       <button
         className={classNames({ active: option.isActive, disabled: option.disabled })}
-        title={translate(option.label)}
+        title={isTranslate ? translate(option.label) : option.label}
         onClick={option.onClick}
         type="button">
         {option.icon && <Icon name={option.icon} />}
-        {translate(option.label)}
+        {isTranslate ? translate(option.label) : option.label}
       </button>
       {option.children?.length && (
         <ul>{option.children?.map(childOption => mapList({ option: childOption }))}</ul>
@@ -22,7 +22,11 @@ const Component = ({ options, translate }: Props) => {
     </li>
   );
 
-  return <ul className="menu col">{options.map(option => mapList({ option }))}</ul>;
+  return (
+    <ul className={classNames('menu', { col: isCol, tree: isTree })}>
+      {options.map(option => mapList({ option }))}
+    </ul>
+  );
 };
 
 export default Component;

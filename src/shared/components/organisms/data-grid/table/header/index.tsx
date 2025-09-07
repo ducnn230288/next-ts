@@ -4,9 +4,9 @@ import classNames from 'classnames';
 import { useTranslations } from 'next-intl';
 import { type MouseEvent, type TouchEvent, useEffect, useRef } from 'react';
 
-import { EIcon } from '@/shared/enums';
+import { EIcon } from '@/shared/enum';
 import Icon from '../../../../atoms/icon';
-import getPinningStyles from '../../utils/get-pinning-styles';
+import getPinningStyles from '../../util/get-pinning-styles';
 import HeaderFilter from './filter';
 import HeaderOption from './option';
 import type Props from './type';

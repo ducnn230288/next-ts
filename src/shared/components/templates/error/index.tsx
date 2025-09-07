@@ -2,7 +2,7 @@
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 
-import { EIcon } from '@/shared/enums';
+import { EIcon } from '@/shared/enum';
 import Button from '../../atoms/button';
 import Icon from '../../atoms/icon';
 import './style.scss';

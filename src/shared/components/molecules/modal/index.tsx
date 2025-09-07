@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import { EIcon } from '@/shared/enums';
+import { EIcon } from '@/shared/enum';
 import Button from '../../atoms/button';
 import Icon from '../../atoms/icon';
 import './style.scss';

@@ -4,8 +4,8 @@ services:
     build:
       context: '..'
       dockerfile: '.docker/Dockerfile-production'
-    environment:
-      NODE_ENV: 'production'
-      NEXT_PUBLIC_URL_API: '/api'
+      args:
+        NEXT_PUBLIC_URL_API: 'http://127.0.0.1:8100/api'
+        JWT_CSRF_TOKEN_EXPIRE_MINUTES: '10'
     ports:
       - '3000:3000'

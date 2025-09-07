@@ -1,7 +1,7 @@
 import type { Ref } from 'react';
 
-import type { C_MASK } from '@/shared/constants';
-import type { EIcon } from '@/shared/enums';
+import type { C_MASK } from '@/shared/constant';
+import type { EIcon } from '@/shared/enum';
 import type { TForm } from '@/shared/types';
 
 type Props<T> = {

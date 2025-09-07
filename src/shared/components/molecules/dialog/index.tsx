@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import { EDialog, EIcon } from '@/shared/enums';
+import { EDialog, EIcon } from '@/shared/enum';
 import Button from '../../atoms/button';
 import Icon from '../../atoms/icon';
 import './style.scss';
@@ -53,21 +53,25 @@ const Component = () => {
     }, 30);
   };
 
-  const fnHide = () => {
+  const fnHide = (callback?: () => void) => {
     setStateDialog(old => ({ ...old, isOpen: false }));
-    timeout.current = setTimeout(
-      () => setStateDialog(old => ({ ...old, isAppendedToBody: false })),
-      250,
-    );
+    timeout.current = setTimeout(() => {
+      setStateDialog(old => ({
+        ...old,
+        isAppendedToBody: false,
+        onCancel: undefined,
+        onOk: undefined,
+      }));
+
+      callback?.();
+    }, 250);
   };
   const fnOk = () => {
-    fnHide();
-    stateDialog.onOk?.();
+    fnHide(stateDialog.onOk);
   };
 
   const fnCancel = () => {
-    fnHide();
-    stateDialog.onCancel?.();
+    fnHide(stateDialog.onCancel);
   };
   if (!stateDialog.isAppendedToBody) return null;
 
@@ -105,7 +109,15 @@ const Component = () => {
         scrollable: stateDialog.scrollable,
       })}
       aria-label={stateDialog.title || 'Dialog'}>
-      <button onClick={fnHide} />
+      <button
+        onClick={() =>
+          fnHide(
+            stateDialog.type === EDialog.Warning || stateDialog.type === EDialog.Confirm
+              ? stateDialog.onCancel
+              : stateDialog.onCancel || stateDialog.onOk,
+          )
+        }
+      />
 
       <div>
         <h3>
@@ -114,10 +126,9 @@ const Component = () => {
         </h3>
         <div className="body">{stateDialog.content}</div>
         <div className="footer">
-          {stateDialog.type === EDialog.Warning ||
-            (stateDialog.type === EDialog.Confirm && (
-              <Button text={stateDialog.cancelText} isOutline handleClick={fnCancel} />
-            ))}
+          {(stateDialog.type === EDialog.Warning || stateDialog.type === EDialog.Confirm) && (
+            <Button text={stateDialog.cancelText} isOutline handleClick={fnCancel} />
+          )}
           <Button text={stateDialog.okText} handleClick={fnOk} />
         </div>
       </div>

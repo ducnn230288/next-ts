@@ -3,7 +3,7 @@ import type { VirtualItem } from '@tanstack/react-virtual';
 import classNames from 'classnames';
 import { useRef } from 'react';
 
-import getPinningStyles from '../../utils/get-pinning-styles';
+import getPinningStyles from '../../util/get-pinning-styles';
 import type Props from './type';
 
 const Component = <TData,>({

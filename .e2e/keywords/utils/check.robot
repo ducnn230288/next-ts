@@ -34,9 +34,18 @@ Wait Until Element Spin
   ${element}                Set Variable                      //*[contains(@class, "spin-loading")]
   ${count}=                 Get Element Count                 ${element}
   IF    ${count} > 0
-    Wait Until Page Does Not Contain Element                  ${element}
+    Wait Until Page Does Not Contain Element                  (${element})[count]
   END
 
 Webpage should contain the search function
   ${element}=               Set Variable                        //*[contains(@class,"c-search")]
   Wait Until Element Is Existent                                ${element}
+
+Look message "${message}" in popup "${title}"
+  ${message}=               Check Text                          ${message}
+  Wait Until Element Spin
+  ${section}=               Set Variable                        //section[contains(@class, "dialog") and @aria-label="${title}"]
+  ${element}=               Set Variable                        ${section}//div[@class="body" and text()="${message}"]
+  Hover                     ${element}
+  Wait Until Element Is Existent                                ${element}
+  Click                     ${section}//div[@class="footer"]//button[@title="Okay"]

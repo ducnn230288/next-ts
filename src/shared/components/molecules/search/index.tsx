@@ -1,14 +1,15 @@
 'use client';
+import classNames from 'classnames';
 import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
 
-import { EIcon } from '@/shared/enums';
+import { EIcon } from '@/shared/enum';
 import Icon from '../../atoms/icon';
 import EntryMask from '../entry/mask';
 import './style.scss';
 import type Props from './type';
 
-const Search = ({ value, handleChange }: Props) => {
+const Search = ({ className, value, handleChange }: Props) => {
   const t = useTranslations('Components');
   useEffect(() => {
     setStateSearch(old => ({ ...old, value }));
@@ -32,13 +33,14 @@ const Search = ({ value, handleChange }: Props) => {
     if (stateSearch.value) {
       setStateSearch(old => ({ ...old, value: undefined }));
       handleChange(undefined);
+      refEntryMask.current!.refInput!.value = '';
     } else {
       fnPressEnter();
     }
   };
 
   return (
-    <div className="search">
+    <div className={classNames('search', className)}>
       <EntryMask
         name={'search'}
         ref={refEntryMask}

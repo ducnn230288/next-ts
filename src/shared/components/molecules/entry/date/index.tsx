@@ -3,14 +3,22 @@ import dayjs, { type Dayjs } from 'dayjs';
 import { useRef } from 'react';
 
 import { Icon } from '@/shared/components/atoms';
-import { EIcon } from '@/shared/enums';
+import { EIcon, EPlacement } from '@/shared/enum';
 import Calendar from '../../../atoms/calendar';
 import Tooltip from '../../../atoms/tooltip';
 import EntryMask from '../mask';
 import './style.scss';
 import type Props from './type';
 
-const EntryDate = ({ value, handleChange, name, disabled, placeholder, isMultiple }: Props) => {
+const EntryDate = ({
+  title = 'Entry Date',
+  value,
+  handleChange,
+  name,
+  disabled,
+  placeholder,
+  isMultiple,
+}: Props) => {
   const refTooltip = useRef<{ setOpen: (isOpen: boolean) => void }>(null);
   const refInput = useRef<{ refInput: HTMLInputElement } | null>(null);
   const refInputEnd = useRef<{ refInput: HTMLInputElement } | null>(null);
@@ -36,11 +44,12 @@ const EntryDate = ({ value, handleChange, name, disabled, placeholder, isMultipl
 
   return (
     <Tooltip
+      title={title}
       ref={refTooltip}
       isArrow={false}
       isClick={true}
       isDisabled={disabled}
-      placement="bottom-end"
+      placement={EPlacement.BottomEnd}
       classContainer="entry-date"
       className="dropdown"
       handleOpen={fnStartDateFocus}

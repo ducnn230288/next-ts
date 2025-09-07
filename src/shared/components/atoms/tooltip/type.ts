@@ -1,9 +1,11 @@
-import type { Placement } from '@floating-ui/dom';
 import type { Ref } from 'react';
 
+import type { EPlacement } from '@/shared/enum';
+
 type Props = {
+  readonly title?: string;
   readonly content: React.ReactNode;
-  readonly placement?: Placement;
+  readonly placement?: EPlacement;
   readonly className?: string;
   readonly classContainer?: string;
   readonly isArrow?: boolean;

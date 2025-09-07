@@ -1,16 +1,16 @@
-import { useReactTable, type TableOptions } from '@tanstack/react-table';
+import { useReactTable, type Table, type TableOptions } from '@tanstack/react-table';
 import { defaultRangeExtractor, useVirtualizer, type Range } from '@tanstack/react-virtual';
 import classNames from 'classnames';
 import { useTranslations } from 'next-intl';
-import { useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
+import { useEffect, useImperativeHandle, useMemo, useRef, useState, type Ref } from 'react';
 
-import { EIcon } from '@/shared/enums';
+import { EIcon } from '@/shared/enum';
 import type { TTableState } from '@/shared/types';
-import { generateRangeNumber } from '@/shared/utils';
+import { generateRangeNumber } from '@/shared/util';
 import Icon from '../../../atoms/icon';
 import Pagination from '../../../molecules/pagination';
 import type Props from '../type';
-import utils from '../utils';
+import utils from '../util';
 import TableBody from './body';
 import TableHeader from './header';
 
@@ -18,6 +18,7 @@ const Component = <TData,>({
   columns,
   data = [],
   handleChange,
+  handleSort,
   filterGlobal,
   header,
   body,
@@ -38,6 +39,7 @@ const Component = <TData,>({
   readonly pageSize?: number;
   readonly maxSize: number;
   readonly isFilter: boolean;
+  readonly ref?: Ref<Table<TData> | undefined>;
 }) => {
   const t = useTranslations('Components');
 
@@ -72,6 +74,7 @@ const Component = <TData,>({
       isFilter,
       stateTable,
       setStateTable,
+      isSort: !!handleSort,
     }),
     defaultColumn,
   };
@@ -109,6 +112,10 @@ const Component = <TData,>({
   }, [stateTable.columnFilters, stateTable.globalFilter]);
 
   useEffect(() => {
+    if (handleSort) handleSort(stateTable.sorting?.map(item => (item.desc ? '-' : '') + item.id));
+  }, [stateTable.sorting]);
+
+  useEffect(() => {
     if (body?.checkbox?.handleChange) {
       body?.checkbox?.handleChange(Object.keys(stateTable.rowSelection));
     }
@@ -118,6 +125,7 @@ const Component = <TData,>({
   useEffect(() => {
     table.setOptions({ ...table.options, columns, data });
     refHeaderGroups.current = table.getHeaderGroups();
+    fnZoom('zoom');
   }, [columns, data]);
 
   const refContainer = useRef<HTMLDivElement | null>(null);
@@ -157,7 +165,11 @@ const Component = <TData,>({
 
   const refFirstResizing = useRef<boolean>(false);
   const columnSizes = () => {
-    if (stateTable.isDragResize && !refFirstResizing.current) {
+    const arrayWidthColumn = columns.map(column => column.size ?? 0);
+    const totalWidthColumns = arrayWidthColumn.reduce((prve, next) => prve + next, 0);
+    const width = refContainer.current?.getBoundingClientRect().width ?? 0;
+    const isRealign = stateTable.isDragResize || totalWidthColumns > width;
+    if (isRealign && !refFirstResizing.current && data.length > 0) {
       refFirstResizing.current = true;
       table.setOptions({
         ...table.options,
@@ -166,30 +178,27 @@ const Component = <TData,>({
             refContainer.current?.querySelector(`th#${c.id}`)?.getBoundingClientRect().width ?? 0;
           return c;
         }),
-        data: data ?? [],
+        data: data,
       });
     }
     const headers = table.getFlatHeaders();
     const colSizes: { [key: string]: number | string } = {
-      width: !stateTable.isDragResize ? '100%' : table.getTotalSize() + 'px',
+      width: isRealign ? table.getTotalSize() + 'px' : '100%',
     };
 
-    const arrayWidthColumn = columns.map(column => column.size ?? 0);
-    const totalWidthColumns = arrayWidthColumn.reduce((prve, next) => prve + next, 0);
-    const width = refContainer.current?.getBoundingClientRect().width ?? 0;
     const percentCell =
       (((width - totalWidthColumns) / width) * 100) / arrayWidthColumn.filter(c => !c).length + '%';
 
     for (const header of headers) {
       let headerSize: string = '';
       let colSize: string = '';
-      if (!stateTable.isDragResize) {
+      if (isRealign) {
+        headerSize = header.getSize() + 'px';
+        colSize = header.column.getSize() + 'px';
+      } else {
         const size = columns.find(c => c.id === header.id)?.size;
         headerSize = size ? size + 'px' : percentCell;
         colSize = size ? size + 'px' : percentCell;
-      } else {
-        headerSize = header.getSize() + 'px';
-        colSize = header.column.getSize() + 'px';
       }
 
       colSizes[`--header-${header.id.replaceAll(' ', '-')}-size`] = headerSize;
@@ -206,9 +215,9 @@ const Component = <TData,>({
     pinLeft: stateTable.columnPinning?.left,
   });
 
-  const fnChangePagination = ({ perPage, page }: { perPage: number; page: number }) => {
-    table.setPagination({ pageIndex: page - 1, pageSize: perPage });
-    pagination?.handleChange?.({ perPage, page });
+  const fnChangePagination = ({ page_size, page }: { page_size: number; page: number }) => {
+    table.setPagination({ pageIndex: page - 1, pageSize: page_size });
+    pagination?.handleChange?.({ page_size, page });
   };
 
   return (
@@ -218,7 +227,7 @@ const Component = <TData,>({
         className={classNames('overflow-auto', className)}
         onScroll={event => handleScroll?.({ event, table, columnVirtualizer, rowVirtualizer })}>
         {firstItem}
-        <table className={'c-virtual-scroll'} style={columnSizes()}>
+        <table className={classNames('c-virtual-scroll', className)} style={columnSizes()}>
           {useMemo(
             () =>
               data?.length ? (
@@ -264,7 +273,7 @@ const Component = <TData,>({
         <Pagination
           total={pagination?.total ?? table.getRowCount()}
           page={pagination?.page ?? table.getState().pagination.pageIndex + 1}
-          perPage={pagination?.perPage ?? table.getState().pagination.pageSize}
+          page_size={pagination?.page_size ?? table.getState().pagination.pageSize}
           description={pagination?.description}
           handleChange={fnChangePagination}
         />

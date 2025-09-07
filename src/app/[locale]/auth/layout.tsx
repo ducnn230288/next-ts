@@ -1,7 +1,7 @@
 import { getTranslations } from 'next-intl/server';
 
 import { Icon } from '@/shared/components/atoms';
-import { EIcon } from '@/shared/enums';
+import { EIcon } from '@/shared/enum';
 import './style.scss';
 
 const Layout = async ({ children }: Readonly<{ children: React.ReactNode }>) => {

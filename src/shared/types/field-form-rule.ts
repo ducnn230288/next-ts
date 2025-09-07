@@ -1,5 +1,5 @@
-import type { C_API } from '@/shared/constants';
-import type { EFormRuleType } from '@/shared/enums';
+import type { C_API } from '@/shared/constant';
+import type { EFormRuleType } from '@/shared/enum';
 import type { TFieldFormValidation } from './field-form-validation';
 /**
  * Represents the interface for a form item rule.

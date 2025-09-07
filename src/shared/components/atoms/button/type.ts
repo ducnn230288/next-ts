@@ -1,6 +1,6 @@
 import type { MouseEventHandler } from 'react';
 
-import type { EIcon, ESize } from '@/shared/enums';
+import type { EIcon, ESize } from '@/shared/enum';
 
 /**
  * Represents the properties for the button component.

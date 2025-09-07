@@ -4,7 +4,7 @@ import type { Dayjs } from 'dayjs';
 import { useTranslations } from 'next-intl';
 import { useRef, useState } from 'react';
 
-import { EIcon, ETableFilterType } from '@/shared/enums';
+import { EIcon, ETableFilterType } from '@/shared/enum';
 import Button from '../../../../../atoms/button';
 import Icon from '../../../../../atoms/icon';
 import Tooltip from '../../../../../atoms/tooltip';
@@ -178,6 +178,7 @@ const Component = <TData,>({ column, refFilterTypeCurrent }: Props<TData>) => {
             </p>
             {column.columnDef.meta?.filter && (
               <EntrySelect
+                title={t('Condition')}
                 handleChange={handleOnChangeSelect}
                 value={stateFilter.value as never}
                 options={[
@@ -225,6 +226,7 @@ const Component = <TData,>({ column, refFilterTypeCurrent }: Props<TData>) => {
 
             {column.columnDef.meta?.filter === ETableFilterType.Date && (
               <EntryDate
+                title={t('Value')}
                 disabled={
                   !stateFilter.value ||
                   stateFilter.value === ETypeFilter.Blank ||
