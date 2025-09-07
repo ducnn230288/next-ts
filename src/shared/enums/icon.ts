@@ -24,4 +24,10 @@ export enum EIcon {
   Filter = 'filter',
   FilterFill = 'filter-fill',
   Sort = 'sort',
+  Users = 'users',
+  Dashboard = 'dashboard',
+  Edit = 'edit',
+  Trash = 'trash',
+  Disable = 'disable',
+  Dots = 'dots',
 }

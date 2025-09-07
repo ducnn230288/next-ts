@@ -2,12 +2,12 @@
 
 import { cookies } from 'next/headers';
 
-export async function store(token: string) {
+export async function setCookie({ key, value }: { key: string; value: string }) {
   const cookieStore = await cookies();
-  cookieStore.set('KEY_TOKEN', token);
+  cookieStore.set(key, value);
 }
 
-export const logout = async () => {
+export const deleteCookie = async ({ key }: { key: string }) => {
   const cookieStore = await cookies();
-  cookieStore.delete('KEY_TOKEN');
+  cookieStore.delete(key);
 };

@@ -5,7 +5,7 @@ import Icon from '../icon';
 import './style.scss';
 import type Props from './type';
 
-const Component = ({ options, translate }: Props) => {
+const Component = ({ options, translate, isTree, isCol = true }: Props) => {
   const mapList = ({ option }: { option: TOption }) => (
     <li key={option.value}>
       <button
@@ -22,7 +22,11 @@ const Component = ({ options, translate }: Props) => {
     </li>
   );
 
-  return <ul className="menu col">{options.map(option => mapList({ option }))}</ul>;
+  return (
+    <ul className={classNames('menu', { col: isCol, tree: isTree })}>
+      {options.map(option => mapList({ option }))}
+    </ul>
+  );
 };
 
 export default Component;

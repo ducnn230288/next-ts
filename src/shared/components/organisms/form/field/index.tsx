@@ -47,35 +47,38 @@ const Component = <T,>({ formApi, fieldForm, isLabel = true, translate, Field }:
     }
 
   const ruleApi = fieldForm.rules?.find(rule => rule.type === EFormRuleType.Api);
-  const validators = {
-    onChange: ({ value }: { value?: DeepValue<T, DeepKeys<T>> }) => {
-      let message = '';
-      rules.forEach(rule => {
-        if (!message) message = rule({ value: value as string, formApi });
-      });
-      return message;
-    },
-    onChangeAsyncDebounceMs: 800,
-    onBlurAsync:
-      ruleApi?.api?.key && ruleApi?.api?.url
-        ? async ({ value }: { value: DeepValue<T, DeepKeys<T>> }) => {
-            const res = await serviceFetch.get<{ exists: boolean }>({
-              url: `${C_API[ruleApi.api!.key]}/${ruleApi.api!.url}`,
-              params: {
-                type: ruleApi.api?.name,
-                value: value as string,
-                id: ruleApi.api?.id,
-              },
+
+  const fnValidate = ({ value }: { value?: DeepValue<T, DeepKeys<T>> }) => {
+    let message = '';
+    rules.forEach(rule => {
+      if (!message) message = rule({ value: value as string, formApi });
+    });
+    return message;
+  };
+  const fnBlurAsync =
+    ruleApi?.api?.key && ruleApi?.api?.url
+      ? async ({ value }: { value: DeepValue<T, DeepKeys<T>> }) => {
+          const res = await serviceFetch.get<{ exists: boolean }>({
+            url: `${C_API[ruleApi.api!.key]}/${ruleApi.api!.url}`,
+            params: {
+              type: ruleApi.api?.name,
+              value: value as string,
+              id: ruleApi.api?.id,
+            },
+          });
+          if (res?.data?.exists === true) {
+            return t('IsAlreadyTaken', {
+              label: ruleApi.api!.label,
+              value: value as string,
             });
-            if (res?.data?.exists === true) {
-              return t('IsAlreadyTaken', {
-                label: ruleApi.api!.label,
-                value: value as string,
-              });
-            }
-            return '';
           }
-        : undefined,
+          return '';
+        }
+      : undefined;
+  const validators = {
+    onChange: fnValidate,
+    onChangeAsyncDebounceMs: 800,
+    onBlurAsync: fnBlurAsync,
   };
 
   const isRequired = fieldForm.rules?.some(rule => rule.type === EFormRuleType.Required);

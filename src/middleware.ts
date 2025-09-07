@@ -17,8 +17,8 @@ export default async function middleware(req: NextRequest) {
   const isPublicPage = publicPathnameRegex.test(req.nextUrl.pathname);
 
   if (!isPublicPage) {
-    const token = (await cookies()).get('KEY_TOKEN');
-    if (!token) {
+    const isLogin = (await cookies()).get('isLogin');
+    if (!isLogin) {
       return NextResponse.redirect(new URL('/auth/login', req.url));
     }
   }

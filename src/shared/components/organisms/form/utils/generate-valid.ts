@@ -51,16 +51,10 @@ const generateValid = <T>({ rule, rules, fieldForm, t }: Props<T>) => {
       case EFormRuleType.Max:
         generateValidMax({ rule, rules, fieldForm, t });
         break;
-      case EFormRuleType.OnlyText:
+      case EFormRuleType.Underscore:
         rules.push(({ value }) => {
-          if (!value || /^[A-Za-z]+$/.test(value)) return '';
-          return t(rule.message ?? 'PleaseEnterOnlyText');
-        });
-        break;
-      case EFormRuleType.OnlyTextSpace:
-        rules.push(({ value }) => {
-          if (!value || /^[a-zA-Z ]+$/.test(value)) return '';
-          return t(rule.message ?? 'PleaseEnterOnlyText');
+          if (!value || /^[a-zA-Z0-9_]+$/.test(value)) return '';
+          return t(rule.message ?? 'PleaseEnterUnderscore');
         });
         break;
       case EFormRuleType.Textarea:

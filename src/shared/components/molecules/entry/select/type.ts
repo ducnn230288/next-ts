@@ -1,6 +1,7 @@
-import type { TOption } from '@/shared/types';
+import type { TApi, TOption } from '@/shared/types';
 
 type Props = {
+  readonly title?: string;
   readonly name?: string;
   readonly options?: TOption[];
   readonly value: Props['isMultiple'] extends true ? (string | number)[] : string | number;
@@ -11,5 +12,6 @@ type Props = {
     value: Props['isMultiple'] extends true ? (string | number)[] : string | number,
   ) => void;
   readonly translate: (key: string, options?: Record<string, string>) => string;
+  readonly api?: TApi;
 };
 export default Props;

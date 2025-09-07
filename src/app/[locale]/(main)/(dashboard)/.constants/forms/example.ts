@@ -54,7 +54,7 @@ export const form = (): TFieldForm<MExample>[] => [
     ],
   },
   {
-    name: 'date',
+    name: 'disabled_at',
     title: 'Date',
     type: EFormType.Date,
     rules: [{ type: EFormRuleType.Required }],

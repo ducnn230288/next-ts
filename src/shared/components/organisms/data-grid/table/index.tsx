@@ -118,6 +118,7 @@ const Component = <TData,>({
   useEffect(() => {
     table.setOptions({ ...table.options, columns, data });
     refHeaderGroups.current = table.getHeaderGroups();
+    fnZoom('zoom');
   }, [columns, data]);
 
   const refContainer = useRef<HTMLDivElement | null>(null);

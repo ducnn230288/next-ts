@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { KEY_USER } from '@/shared/constants';
 import { useAppStore } from '..';
 import reducers from './reducers';
 import initialState from './state';
@@ -27,11 +26,10 @@ const globalSlice = createSlice({
         utils.changeLanguage(action.payload);
         state.language = action.payload;
       }
-      state.user = JSON.parse(localStorage.getItem(KEY_USER) ?? '{}');
     },
   },
   extraReducers: builder => {
-    reducers.postLogin.reducer(builder);
+    reducers.getUserInfo.reducer(builder);
   },
 });
 export default globalSlice;
@@ -46,7 +44,6 @@ export const SGlobal = () => {
   return {
     set: (values: TStateGlobal) => dispatch(globalSlice.actions.set(values)),
     setLanguage: (language: string) => dispatch(globalSlice.actions.setLanguage(language)),
-    postLogin: (values: { username?: string; password?: string }) =>
-      dispatch(reducers.postLogin.action(values)),
+    getUserInfo: () => dispatch(reducers.getUserInfo.action({})),
   };
 };

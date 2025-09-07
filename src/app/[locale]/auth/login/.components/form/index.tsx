@@ -1,69 +1,46 @@
 'use client';
+import { useMutation } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
 
-import { store } from '@/app/action';
+import { deleteCookie, setCookie } from '@/app/action';
 import { useRouter } from '@/core/lib/i18n/navigation';
-import { SGlobal, useAppSelector } from '@/core/stores';
+import { serviceFetch } from '@/core/services';
 import { Button } from '@/shared/components/atoms';
 import { Form } from '@/shared/components/organisms';
-import { C_LINK } from '@/shared/constants';
-import { EFormRuleType, EFormType, ESize, EStatusState } from '@/shared/enums';
-import type { TFieldForm, TFormFooter } from '@/shared/types';
+import { C_API, C_LINK } from '@/shared/constants';
+import { ESize } from '@/shared/enums';
+import type { TFormFooter } from '@/shared/types';
+import constants from '../../.constants';
+import type { IRequestLogin } from '../../.interface';
 
-interface IRequestLogin {
-  username?: string;
-  password?: string;
-}
 const Component = () => {
-  const t = useTranslations('Auth/Layout');
-  const fields: TFieldForm<IRequestLogin>[] = [
-    {
-      name: 'username',
-      title: 'Username',
-      type: EFormType.Text,
-      rules: [{ type: EFormRuleType.Required }, { type: EFormRuleType.Email }],
-    },
-    {
-      name: 'password',
-      title: 'Password',
-      type: EFormType.Password,
-      notDefaultValid: true,
-      rules: [{ type: EFormRuleType.Required }],
-    },
-  ];
-  const renderFooter = ({ canSubmit, formApi }: TFormFooter<IRequestLogin>) => (
-    <Button
-      text={t('LogIn')}
-      handleClick={() => formApi.handleSubmit()}
-      disabled={!canSubmit}
-      size={ESize.Large}
-    />
+  useEffect(() => {
+    deleteCookie({ key: 'isLogin' });
+  }, []);
+
+  const t = useTranslations('Auth/Login');
+  const renderFooter = ({ formApi }: TFormFooter<IRequestLogin>) => (
+    <Button text={t('LogIn')} handleClick={() => formApi.handleSubmit()} size={ESize.Large} />
   );
 
   const navigate = useRouter();
-  const sGlobal = SGlobal();
-  const status = useAppSelector(state => state.status);
-  const isLoading = useAppSelector(state => state.isLoading);
 
-  useEffect(() => {
-    if (status === EStatusState.IsFulfilled) {
-      fnLoginSuccess();
-    }
-  }, [status]);
-
-  const fnLoginSuccess = async () => {
-    await store('data?.token');
-    sGlobal.set({ status: EStatusState.Idle });
-    navigate.replace(C_LINK.Example);
-  };
+  const loginMutation = useMutation({
+    mutationFn: async (values: IRequestLogin) =>
+      await serviceFetch.post({ url: C_API.BaseLogin, values, showMessage: false }),
+    onSuccess: async () => {
+      await setCookie({ key: 'isLogin', value: '1' });
+      navigate.replace(C_LINK.Example);
+    },
+  });
 
   return (
     <Form<IRequestLogin>
       isEnterSubmit={true}
-      isLoading={isLoading}
-      fields={fields}
-      handleSubmit={({ value }) => sGlobal.postLogin(value!)}
+      isLoading={loginMutation.isPending}
+      fields={constants.Forms.LOGIN()}
+      handleSubmit={({ value }) => loginMutation.mutate(value!)}
       footer={renderFooter}
       translate={t}
     />

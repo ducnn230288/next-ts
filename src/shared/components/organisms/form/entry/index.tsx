@@ -55,6 +55,7 @@ const Component = <T,>({ formApi, fieldForm, field, state, translate }: Props<T>
       handleBlur={value => {
         fieldForm.onBlur?.({ value, formApi, name: field.name });
         field.handleBlur();
+        field.handleChange?.(value as DeepValue<T, DeepKeys<T>>);
       }}
       handleChange={value => {
         fieldForm.onChange?.({ value });
@@ -73,6 +74,7 @@ const Component = <T,>({ formApi, fieldForm, field, state, translate }: Props<T>
       handleBlur={value => {
         fieldForm.onBlur?.({ value, formApi, name: field.name });
         field.handleBlur();
+        field.handleChange?.(value as DeepValue<T, DeepKeys<T>>);
       }}
       handleChange={value => {
         fieldForm.onChange?.({ value });
@@ -93,6 +95,7 @@ const Component = <T,>({ formApi, fieldForm, field, state, translate }: Props<T>
       handleBlur={value => {
         fieldForm.onBlur?.({ value, formApi, name: field.name });
         field.handleBlur();
+        field.handleChange?.(value as DeepValue<T, DeepKeys<T>>);
       }}
       handleChange={value => {
         fieldForm.onChange?.({ value });
@@ -117,13 +120,14 @@ const Component = <T,>({ formApi, fieldForm, field, state, translate }: Props<T>
 
   const select = () => (
     <EntrySelect
+      title={translate(fieldForm.title)}
       name={field.name}
       value={fieldState.value as never}
       disabled={fieldForm.disabled?.({ value: fieldState.value })}
       placeholder={t(fieldForm.placeholder ?? 'Choose', {
         title: translate(fieldForm.title)?.toLowerCase(),
       })}
-      // api={fieldForm.api}
+      api={fieldForm.api}
       options={fieldForm.options}
       isMultiple={fieldForm.isMultiple}
       translate={translate}
@@ -136,6 +140,7 @@ const Component = <T,>({ formApi, fieldForm, field, state, translate }: Props<T>
 
   const date = () => (
     <EntryDate
+      title={translate(fieldForm.title)}
       name={field.name}
       value={fieldState.value as Dayjs}
       disabled={fieldForm.disabled?.({ value: fieldState.value })}

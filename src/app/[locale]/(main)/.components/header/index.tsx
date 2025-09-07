@@ -1,15 +1,21 @@
 'use client';
 import { useLocale, useTranslations } from 'next-intl';
+import { useEffect } from 'react';
 
-import { logout } from '@/app/action';
-import { useAppSelector } from '@/core/stores';
+import { SGlobal, useAppSelector } from '@/core/stores';
 import { Avatar, Icon } from '@/shared/components/atoms';
 import { Dropdown } from '@/shared/components/molecules';
-import { C_LINK } from '@/shared/constants';
 import { EIcon } from '@/shared/enums';
 import type { TOption } from '@/shared/types';
+import { logout } from '@/shared/utils';
+import './style.scss';
 
-const HeaderRight = () => {
+const Component = () => {
+  const sGlobal = SGlobal();
+  useEffect(() => {
+    sGlobal.getUserInfo();
+  }, []);
+
   const changeTheme = () => {
     const html = document.querySelector('html');
     const dataTheme = html?.getAttribute('data-theme');
@@ -45,30 +51,36 @@ const HeaderRight = () => {
       value: 'SignOut',
       label: 'SignOut',
       icon: EIcon.Out,
-      onClick: async () => {
-        await logout();
-        window.location.href = C_LINK.AuthLogin;
-      },
+      onClick: () => logout(),
     },
   ];
 
   const user = useAppSelector(state => state.user);
   return (
-    <div className="right">
-      <Dropdown options={listLanguage} translate={key => key}>
-        <button title={t('ChangeLanguage')}>
-          <Icon name={language as EIcon} className="rounded-lg size-6" />
-        </button>
-      </Dropdown>
-      <button onClick={changeTheme} title={t('ChangeTheme')}>
-        <Icon name={EIcon.DayNight} className="size-6" />
+    <header className="main-header" aria-label={t('Header')}>
+      <button className="flex gap-2 items-center">
+        <div className="hamburger">
+          <div className="line" />
+          <div className="line" />
+          <div className="line" />
+        </div>
       </button>
-      <Dropdown options={listMyProfile} translate={t}>
-        <button title={t('MyInformation')}>
-          <Avatar src={user?.avatarUrl} text={user?.username ?? ''} classSize={'size-7'} />
+      <div className="right">
+        <Dropdown options={listLanguage} translate={key => key}>
+          <button title={t('ChangeLanguage')}>
+            <Icon name={language as EIcon} className="rounded-lg size-6" />
+          </button>
+        </Dropdown>
+        <button onClick={changeTheme} title={t('ChangeTheme')}>
+          <Icon name={EIcon.DayNight} className="size-6" />
         </button>
-      </Dropdown>
-    </div>
+        <Dropdown options={listMyProfile} translate={t}>
+          <button title={t('MyInformation')}>
+            <Avatar text={user?.full_name ?? user?.username} classSize={'size-7'} />
+          </button>
+        </Dropdown>
+      </div>
+    </header>
   );
 };
-export default HeaderRight;
+export default Component;

@@ -1,10 +1,10 @@
 import { EFormType } from '@/shared/enums';
-import type { TFieldForm, TFlatten } from '@/shared/types';
+import type { TFieldForm } from '@/shared/types';
 
 /**
  * Evaluates whether a form item should be displayed based on its type and condition.
  */
-const fnCondition = <T>({
+const condition = <T>({
   fieldForm,
   index,
   values,
@@ -15,8 +15,6 @@ const fnCondition = <T>({
 }) =>
   fieldForm?.type &&
   fieldForm?.type !== EFormType.Hidden &&
-  (!fieldForm?.condition ||
-    (values &&
-      !!fieldForm?.condition({ value: (values as TFlatten<T>)[fieldForm.name], index, values })));
+  (!fieldForm?.condition || !!fieldForm?.condition({ index, values }));
 
-export default fnCondition;
+export default condition;

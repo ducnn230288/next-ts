@@ -7,36 +7,42 @@ Resource               ./action.robot
 Webpage should contain "${name}" input field
   Wait Until Element Spin
   ${element}=               Get Element Item By Name          ${name}                      //*[(self::input or self::textarea) and contains(@class,"entry")]
+  Hover                     ${element}
   ${count}=                 Get Element Count                 ${element}
   Should Be True            ${count} >= 1
 
 Webpage should contain "${name}" select field
   Wait Until Element Spin
   ${element}=               Get Element Item By Name          ${name}                      //div[contains(@class,"entry-select")]//input[@readonly]
+  Hover                     ${element}
   ${count}=                 Get Element Count                 ${element}
   Should Be True            ${count} >= 1
 
 Webpage should contain "${name}" date picker field
   Wait Until Element Spin
   ${element}=               Get Element Item By Name          ${name}                      //div[contains(@class,"entry-date")]//input
+  Hover                     ${element}
   ${count}=                 Get Element Count                 ${element}
   Should Be True            ${count} >= 1
 
 Webpage should contain "${name}" radio field
   Wait Until Element Spin
   ${element}=               Get Element Item By Name          ${name}                      //*[contains(@class,"choice-group")]//input[@type="radio"]
+  Hover                     ${element}
   ${count}=                 Get Element Count                 ${element}
   Should Be True            ${count} >= 1
 
 Webpage should contain "${name}" checkbox field
   Wait Until Element Spin
   ${element}=               Get Element Item By Name          ${name}                      //*[contains(@class,"choice-group")]//input[@type="checkbox"]
+  Hover                     ${element}
   ${count}=                 Get Element Count                 ${element}
   Should Be True            ${count} >= 1
 
 Webpage should contain "${name}" upload field
   Wait Until Element Spin
   ${element}=               Get Element Item By Name          ${name}                      //input[@type = "file"]
+  Hover                     ${element}
   ${count}=                 Get Element Count                 ${element}
   Should Be True            ${count} >= 1
 

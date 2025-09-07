@@ -2,6 +2,8 @@
 import classNames from 'classnames';
 import { useState } from 'react';
 
+import { sApi } from '@/core/stores';
+import { C_API } from '@/shared/constants';
 import { EIcon } from '@/shared/enums';
 import { getValueChildren, mapChildren } from '@/shared/utils';
 import Icon from '../../../atoms/icon';
@@ -10,6 +12,7 @@ import './style.scss';
 import type Props from './type';
 
 const EntrySelect = ({
+  title = 'Entry Select',
   name = 'select',
   options = [],
   value,
@@ -18,11 +21,24 @@ const EntrySelect = ({
   isMultiple,
   handleChange,
   translate,
+  api,
 }: Props) => {
   const [stateEntrySelect, setStateEntrySelect] = useState({ isOpen: false });
   const inlineValue = Array.isArray(value) ? value : [value];
+  const list =
+    api?.keyApi &&
+    sApi.useList<{ data: never[]; total: number; page: number; page_size: number }, { id: string }>(
+      {
+        url: C_API[api.keyApi],
+        valueParam: '1',
+        keyParam: 'page',
+        params: api?.params ? api.params({ fullTextSearch: '', value }) : {},
+        staleTime: api?.staleTime || 24 * 60 * 60 * 1000,
+      },
+    );
+
   const listOptions = mapChildren({
-    options,
+    options: list?.data?.data?.map(item => (api?.format ? api.format(item) : item)) || options,
     convert: item => ({
       ...item,
       onClick: () => fnChange(item.value),
@@ -31,7 +47,7 @@ const EntrySelect = ({
   });
   const listLabel = value
     ? getValueChildren({
-        children: options,
+        children: listOptions,
         keyGetValue: 'label',
         value: inlineValue,
       })?.map(e => translate(e))
@@ -51,6 +67,7 @@ const EntrySelect = ({
 
   return (
     <Dropdown
+      title={title}
       options={listOptions}
       translate={translate}
       handleOpen={isOpen => setStateEntrySelect({ isOpen })}

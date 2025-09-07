@@ -28,7 +28,6 @@ export default class RAuthBase {
         })
 
         .addCase(this.action.rejected, (state, action) => {
-          console.log('Action rejected:', action);
           state.isLoading = false;
           this.rejected(state, action);
         });

@@ -6,7 +6,7 @@ export interface MExample {
   thumbnailUrl?: string;
   albumId?: number;
   id?: string;
-  date?: string;
+  disabled_at?: string;
   date_range?: string;
   upload?: string;
   select?: number;

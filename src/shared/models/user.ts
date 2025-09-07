@@ -1,16 +1,17 @@
+import type { MCommon } from './common';
+import type { MRole } from './role';
+
 /**
  * Represents a member for a project.
  */
-export interface MUser {
-  name?: string;
+export interface MUser extends MCommon {
   username?: string;
-  avatarUrl?: string;
-  password?: string;
   email?: string;
-  phoneNumber?: string;
-  birthday?: string;
-  description?: string;
-  positionCode?: string;
-  retypedPassword?: string;
-  roleCode?: string;
+  full_name?: string;
+  tel?: string;
+  is_active?: string;
+  is_superuser?: string;
+  role_id?: string;
+  password?: string;
+  role?: MRole;
 }

@@ -52,5 +52,13 @@ type Props<TData> = {
   readonly translate: (key: string, options?: Record<string, string>) => string;
   readonly ref?: Ref<Table<TData> | undefined>;
   readonly firstItem?: React.JSX.Element;
+  readonly action?: {
+    readonly label: string;
+    readonly name: (data: TData) => unknown;
+    readonly onDetail?: (data: TData) => void;
+    readonly onEdit?: (data: TData) => void;
+    readonly onDelete?: (data: TData) => void;
+    readonly renderMore?: (data: TData) => ({ label: string; value: string } | undefined)[];
+  };
 };
 export default Props;

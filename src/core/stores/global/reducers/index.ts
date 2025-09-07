@@ -1,9 +1,9 @@
-import PostLogin from './post-login';
+import GetUserInfo from './get-user-info';
 
 const name = 'Auth';
 
 const reducer = {
-  postLogin: new PostLogin(name),
+  getUserInfo: new GetUserInfo(name),
 };
 
 export default reducer;

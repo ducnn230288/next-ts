@@ -225,6 +225,7 @@ const Component = <TData,>({ column, refFilterTypeCurrent }: Props<TData>) => {
 
             {column.columnDef.meta?.filter === ETableFilterType.Date && (
               <EntryDate
+                title={t('Value')}
                 disabled={
                   !stateFilter.value ||
                   stateFilter.value === ETypeFilter.Blank ||

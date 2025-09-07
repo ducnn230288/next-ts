@@ -3,6 +3,7 @@ export * from './format-date-time';
 export * from './generate-range-number';
 export * from './get-value-children';
 export * from './is-numeric';
+export * from './logout';
 export * from './map-children';
 export * from './set-nested-value';
 export * from './sort-object';

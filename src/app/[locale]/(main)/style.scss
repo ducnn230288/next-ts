@@ -5,26 +5,33 @@
 
   > .wrapper {
     @apply bg-base-50 grow px-0;
-    header {
-      @apply bg-primary-700 text-base-0 flex h-12 items-center justify-between px-5;
-
-      .right {
-        @apply flex items-center gap-3;
-        button {
-          @apply h-8 rounded-lg px-1 text-sm;
-          &:hover {
-            @apply bg-primary-600;
-          }
-        }
-      }
-    }
 
     main {
       @apply relative mx-auto overflow-auto pl-12 md:pl-0;
       min-height: calc(100vh - 5.4rem);
 
       @media only screen and (min-width: 768px) {
-        width: calc(100vw - 14rem);
+        width: calc(100vw - 15rem);
+      }
+
+      .block {
+        @apply container mx-auto;
+      }
+
+      .card {
+        @apply bg-base-0 mx-4 mt-5 flex flex-col gap-5 rounded-xl px-5 py-5;
+
+        > h1 {
+          @apply text-lg font-bold;
+        }
+      }
+
+      .footer-buttons {
+        @apply flex w-full justify-between gap-2;
+
+        .btn {
+          @apply min-w-24;
+        }
       }
     }
 

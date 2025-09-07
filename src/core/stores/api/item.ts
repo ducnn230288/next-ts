@@ -1,11 +1,16 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { serviceFetch } from '@/core/services';
+import type Props from './type';
 
-const useItem = <TData>({ url, param }: { url: string; param: string }) =>
+const useItem = <TData, TParam = never>({
+  url,
+  params,
+  staleTime = 10000,
+}: Pick<Props<TData, TParam>, 'url' | 'params' | 'staleTime'>) =>
   useQuery<TData | undefined>({
-    queryKey: [url, param],
-    queryFn: async () =>
-      param ? (await serviceFetch.get<TData>({ url: url + '/' + param })).data : undefined,
+    queryKey: [url, params],
+    queryFn: async () => (await serviceFetch.get<TData>({ url, params })).data,
+    staleTime,
   });
 export default useItem;

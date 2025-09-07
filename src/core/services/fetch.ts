@@ -1,19 +1,28 @@
 import queryString from 'query-string';
 
 import { translate } from '@/app/provider';
-import { KEY_TOKEN, LINK_API } from '@/shared/constants';
+import { C_LINK, KEY_TOKEN, LINK_API } from '@/shared/constants';
 import type { TResponses } from '@/shared/types';
 import { serviceMessage } from './message';
 
 /**
  * serviceFetch object for making HTTP requests.
  */
+type Props = {
+  url: string;
+  params?: Record<string, unknown>;
+  config?: RequestInit;
+  headers?: RequestInit['headers'];
+  showError?: boolean;
+  showMessage?: boolean;
+  handleSuccess?: () => void;
+};
 export const serviceFetch = {
   init: () =>
     ({
       mode: 'cors',
       cache: 'no-cache',
-      credentials: 'same-origin',
+      credentials: 'include',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
@@ -32,15 +41,9 @@ export const serviceFetch = {
     headers = {},
     showError = true,
     showMessage = false,
-  }: {
-    url: string;
-    params?: Record<string, unknown>;
-    config: RequestInit;
-    headers?: RequestInit['headers'];
-    showError?: boolean;
-    showMessage?: boolean;
-  }) => {
-    config.headers = { ...config.headers, ...headers };
+    handleSuccess,
+  }: Props) => {
+    config!.headers = { ...config!.headers, ...headers };
     const linkParam = queryString.stringify(params, { arrayFormat: 'index' });
     let response = await fetch(
       (url.includes('https://') || url.includes('http://') ? '' : LINK_API) +
@@ -48,162 +51,61 @@ export const serviceFetch = {
         (linkParam && '?' + linkParam),
       config,
     );
-    response = await serviceFetch.checkResponse({
-      response,
-      url,
-      config,
-      linkParam,
-    });
+    response = await serviceFetch.checkResponse({ response });
 
     const res: TResponses<T> = await response.json();
     if (response.ok) {
-      if (showMessage && res.msg) serviceMessage.success({ content: translate(res.msg) });
+      if (showMessage && res.msg)
+        serviceMessage.success({ content: translate(res.msg), onOk: handleSuccess });
     } else if (res.msg) {
-      if (showError) serviceMessage.error({ content: translate(res.msg) });
+      if (showError && response.status !== 401)
+        serviceMessage.error({ content: translate(res.msg) });
       throw new Error(res.msg);
     }
     return res;
   },
-  get: <T>({
-    url,
-    params = {},
-    headers,
-    showError = true,
-    showMessage = false,
-  }: {
-    url: string;
-    params?: Record<string, unknown>;
-    headers?: RequestInit['headers'];
-    showError?: boolean;
-    showMessage?: boolean;
-  }) =>
+  get: <T>(props: Props) =>
+    serviceFetch.responsible<T>({ ...props, config: { ...serviceFetch.init(), method: 'GET' } }),
+  post: <T>({ values, showMessage = true, ...props }: Props & { values: unknown }) =>
     serviceFetch.responsible<T>({
-      url,
-      params,
-      config: { ...serviceFetch.init(), method: 'GET' },
-      headers,
-      showError,
-      showMessage,
-    }),
-  post: <T>({
-    url,
-    values,
-    params = {},
-    headers,
-    showError = true,
-    showMessage = true,
-  }: {
-    url: string;
-    values: unknown;
-    params?: Record<string, unknown>;
-    headers?: RequestInit['headers'];
-    showError?: boolean;
-    showMessage?: boolean;
-  }) =>
-    serviceFetch.responsible<T>({
-      url,
-      params,
+      ...props,
       config: {
         ...serviceFetch.init(),
         method: 'POST',
-        body: JSON.stringify(values),
+        body: values instanceof FormData ? values : JSON.stringify(values),
       },
-      headers,
-      showError,
       showMessage,
     }),
-  patch: <T>({
-    url,
-    values = {},
-    params = {},
-    headers,
-    showError = true,
-    showMessage = true,
-  }: {
-    url: string;
-    values: unknown;
-    params?: Record<string, unknown>;
-    headers?: RequestInit['headers'];
-    showError?: boolean;
-    showMessage?: boolean;
-  }) =>
+  patch: <T>({ values, showMessage = true, ...props }: Props & { values: unknown }) =>
     serviceFetch.responsible<T>({
-      url,
-      params,
+      ...props,
       config: {
         ...serviceFetch.init(),
         method: 'PATCH',
-        body: JSON.stringify(values),
+        body: values instanceof FormData ? values : JSON.stringify(values),
       },
-      headers,
-      showError,
       showMessage,
     }),
-  put: <T>({
-    url,
-    values = {},
-    params = {},
-    headers,
-    showError = true,
-    showMessage = true,
-  }: {
-    url: string;
-    values: unknown;
-    params?: Record<string, unknown>;
-    headers?: RequestInit['headers'];
-    showError?: boolean;
-    showMessage?: boolean;
-  }) =>
+  put: <T>({ values, showMessage = true, ...props }: Props & { values: unknown }) =>
     serviceFetch.responsible<T>({
-      url,
-      params,
+      ...props,
       config: {
         ...serviceFetch.init(),
         method: 'PUT',
         body: values instanceof FormData ? values : JSON.stringify(values),
       },
-      headers,
-      showError,
       showMessage,
     }),
-  delete: <T>({
-    url,
-    params = {},
-    headers,
-    showError = true,
-    showMessage = true,
-  }: {
-    url: string;
-    params?: Record<string, unknown>;
-    headers?: RequestInit['headers'];
-    showError?: boolean;
-    showMessage?: boolean;
-  }) =>
+  delete: <T>({ showMessage = true, ...props }: Props) =>
     serviceFetch.responsible<T>({
-      url,
-      params,
+      ...props,
       config: { ...serviceFetch.init(), method: 'DELETE' },
-      headers,
-      showError,
       showMessage,
     }),
-  checkResponse: async ({
-    response,
-  }: // url,
-  {
-    response: Response;
-    url: string;
-    config: RequestInit;
-    linkParam: string;
-  }) => {
-    // if (response.status === 401 && url !== C_API.AuthLogin) {
-    //   localStorage.removeItem(KEY_TOKEN);
-    //   logout
-    //   location.href =
-    //     location.href.replace(location.hash, "") +
-    //     location.hash.split("/").slice(0, 2).join("/") +
-    //     C_LINK.AuthLogin;
-    // }
+  checkResponse: async ({ response }: { response: Response }) => {
+    if (response.status === 401) {
+      window.location.href = C_LINK.AuthLogin;
+    }
     return response;
   },
 };

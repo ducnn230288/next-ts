@@ -60,7 +60,7 @@ const Component = <T,>({
         <form className={classNames('form', { inline: isInline }, className)} onSubmit={fnSubmit}>
           {isEnterSubmit && <input type="submit" hidden />}
           {fields
-            .filter((fieldForm, index) => utils.fnCondition<T>({ fieldForm, index, values }))
+            .filter((fieldForm, index) => utils.condition<T>({ fieldForm, index, values }))
             .map((fieldForm, index) => (
               <div
                 data-item="true"

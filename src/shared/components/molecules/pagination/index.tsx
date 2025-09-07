@@ -1,9 +1,9 @@
 'use client';
 import classNames from 'classnames';
+import { useTranslations } from 'next-intl';
 import { useRef } from 'react';
 
 import { EIcon } from '@/shared/enums';
-import { useTranslations } from 'next-intl';
 import Icon from '../../atoms/icon';
 import EntrySelect from '../entry/select';
 import './style.scss';
@@ -106,6 +106,7 @@ const Component = ({
       <div className={'pagination'}>
         <div className={'left'}>
           <EntrySelect
+            title={t('PageSize')}
             value={perPage}
             options={pageSizeOptions.current}
             translate={text => text + ' / ' + t('Page').toLowerCase()}

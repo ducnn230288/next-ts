@@ -35,12 +35,6 @@ const convertValueForm = <T>({ fields, values, isExport }: Prop<T>) => {
           ? (values[field.name] as Record<string, string>[]).map(value => value?.['id'] || value)
           : values[field.name]
       ) as GetValueByPath<T, TPath<T>>;
-    else if (isExport && !field?.isMultiple && values?.[field.name] !== undefined) {
-      values[field.name] = (values[field.name] as Record<string, string>[])[0] as GetValueByPath<
-        T,
-        TPath<T>
-      >;
-    }
     return values;
   };
 
@@ -80,13 +74,11 @@ const convertValueForm = <T>({ fields, values, isExport }: Prop<T>) => {
     [EFormType.Upload]: upload,
   };
 
+  const valuesDefault: Record<string, unknown> = {};
   fields
     .filter(
       (field, index) =>
-        field.type &&
-        (!field?.condition ||
-          (values &&
-            !!field?.condition({ value: (values as TFlatten<T>)[field.name], index, values }))),
+        field.type && (!field?.condition || (values && !!field?.condition({ index, values }))),
     )
     .forEach(field => {
       if (field?.convert && values) {
@@ -105,7 +97,8 @@ const convertValueForm = <T>({ fields, values, isExport }: Prop<T>) => {
           (values as TFlatten<T>)[field.name] as string
         ).trim() as GetValueByPath<T, TPath<T>>;
       }
+      valuesDefault[field.name] = (values as Record<string, unknown>)?.[field.name];
     });
-  return values;
+  return valuesDefault as T;
 };
 export default convertValueForm;

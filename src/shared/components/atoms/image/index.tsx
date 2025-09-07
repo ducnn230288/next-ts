@@ -9,7 +9,7 @@ import type Props from './type';
 let timeoutImage: ReturnType<typeof setTimeout>;
 const lightbox: Record<string, { destroy: () => void } | undefined> = {};
 
-const Component = ({ src, className, alt, selector, width, height }: Props) => {
+const Component = ({ src, className, alt, selector, width = 100, height = 100 }: Props) => {
   const setupLightbox = () => {
     if (timeoutImage) {
       clearTimeout(timeoutImage);

@@ -15,10 +15,7 @@ All steps Login
   When Click "Log In" button
   Then Required message "Please enter username" displayed under "Username" field
   Then Required message "Please enter password" displayed under "Password" field
-
-  When Enter "email" in "Username" with "admin.admin.com"
-  Then Required message "Please enter a valid email address!" displayed under "Username" field
-
+  
   When Enter "email" in "Username" with "${USER_NAME}"
   When Enter "text" in "Password" with "${USER_PASSWORD}"
 

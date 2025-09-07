@@ -3,12 +3,13 @@ import classNames from 'classnames';
 
 import { EIcon } from '@/shared/enums';
 import Icon from '../../../../../atoms/icon';
+import type Props from '../../../type';
 
 const ExpandedCell = <TData,>({
   row,
   getValue,
   handleExpand,
-}: CellContext<TData, unknown> & { readonly handleExpand?: (row: TData) => void }) => {
+}: CellContext<TData, unknown> & Pick<Props<TData>, 'handleExpand'>) => {
   const fnExpand = (row: Row<TData>) => {
     row.toggleExpanded();
     handleExpand?.(row.original);

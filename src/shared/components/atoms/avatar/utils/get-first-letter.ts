@@ -2,7 +2,7 @@
  * Retrieves the first letter(s) from a given text.
  */
 const getFirstLetter = (text: string, numberLetter = 1) => {
-  text = text.trim();
+  text = text?.trim() ?? 'A';
   if (text.split(' ').length === 1) {
     return text.substring(0, numberLetter);
   } else {

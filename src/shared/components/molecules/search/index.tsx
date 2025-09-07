@@ -1,4 +1,5 @@
 'use client';
+import classNames from 'classnames';
 import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
 
@@ -8,7 +9,7 @@ import EntryMask from '../entry/mask';
 import './style.scss';
 import type Props from './type';
 
-const Search = ({ value, handleChange }: Props) => {
+const Search = ({ className, value, handleChange }: Props) => {
   const t = useTranslations('Components');
   useEffect(() => {
     setStateSearch(old => ({ ...old, value }));
@@ -38,7 +39,7 @@ const Search = ({ value, handleChange }: Props) => {
   };
 
   return (
-    <div className="search">
+    <div className={classNames('search', className)}>
       <EntryMask
         name={'search'}
         ref={refEntryMask}

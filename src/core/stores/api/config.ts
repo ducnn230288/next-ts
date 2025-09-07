@@ -1,3 +1,5 @@
+import { keepPreviousData } from '@tanstack/react-query';
+
 import { serviceFetch } from '@/core/services';
 import type Props from './type';
 
@@ -6,6 +8,9 @@ const config = <TData, TParam>({
   valueParam,
   keyParam,
   isAddParamEmpty,
+  params = {},
+  staleTime = 4000,
+  enabled = true,
 }: Props<TData, TParam>) => ({
   queryKey: [url, valueParam],
   queryFn:
@@ -13,9 +18,15 @@ const config = <TData, TParam>({
       ? async () =>
           await serviceFetch.get<TData[]>({
             url,
-            params: valueParam || isAddParamEmpty ? { [keyParam]: valueParam } : {},
+            params: {
+              ...(valueParam || isAddParamEmpty ? { [keyParam]: valueParam } : {}),
+              ...params,
+            },
           })
       : () => [],
+  placeholderData: keepPreviousData,
+  staleTime,
+  enabled,
 });
 
 export default config;

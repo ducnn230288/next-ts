@@ -4,7 +4,7 @@
  */
 .data-grid {
   .c-virtual-scroll {
-    @apply min-h-96 w-full;
+    @apply min-h-96 w-full overflow-hidden;
 
     .empty {
       @apply text-base-400 absolute top-0 left-0 flex h-full w-full flex-col items-center justify-center gap-2;

@@ -13,7 +13,7 @@ const Component = ({ text, src, showName, classSize, index = 0 }: Props) => {
 
   return (
     <div className={'avatar'}>
-      {!text || src ? (
+      {src ? (
         <div className={classNames('shrink-0 ', { '-ml-2': index > 0 })}>
           <Image
             className={classNames(classSize, { 'object-cover': showName })}

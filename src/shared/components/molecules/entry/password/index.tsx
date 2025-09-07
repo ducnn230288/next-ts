@@ -2,6 +2,7 @@
 import { useState } from 'react';
 
 import { EIcon } from '@/shared/enums';
+import classNames from 'classnames';
 import Icon from '../../../atoms/icon';
 import type Props from './type';
 
@@ -16,9 +17,9 @@ const EntryPassword = ({ name, value, placeholder, disabled, handleChange, handl
   return (
     <div className="relative">
       <input
-        className="entry pr-9"
+        className={classNames('entry pr-9', { disabled })}
         name={name}
-        value={value}
+        value={value ?? ''}
         placeholder={placeholder}
         disabled={disabled}
         type={!stateEntryPassword.isVisible ? 'password' : 'text'}

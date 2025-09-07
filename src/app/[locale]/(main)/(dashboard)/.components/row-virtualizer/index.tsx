@@ -1,14 +1,15 @@
 'use client';
-import { sApi } from '@/core/stores';
+import { useQuery } from '@tanstack/react-query';
+
+import { serviceFetch } from '@/core/services';
 import { RowVirtualizer, Spin } from '@/shared/components/atoms';
 import { C_API } from '@/shared/constants';
 import type { MExample } from '@/shared/models';
 
 const ExampleRowVirtualizer = () => {
-  const list = sApi.useList<MExample, { id: string }>({
-    url: C_API.Example,
-    valueParam: '',
-    keyParam: 'id',
+  const list = useQuery<MExample[]>({
+    queryKey: ['example'],
+    queryFn: async () => (await serviceFetch.get<MExample[]>({ url: C_API.Example })) as MExample[],
   });
 
   return (

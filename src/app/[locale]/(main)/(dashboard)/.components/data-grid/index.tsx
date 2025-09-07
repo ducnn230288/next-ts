@@ -1,8 +1,9 @@
 'use client';
+import { useQuery } from '@tanstack/react-query';
 import type { Table } from '@tanstack/react-table';
 import { useRef, useState } from 'react';
 
-import { sApi } from '@/core/stores';
+import { serviceFetch } from '@/core/services';
 import { Button, Tooltip } from '@/shared/components/atoms';
 import { Search } from '@/shared/components/molecules';
 import { DataGrid, FormModal } from '@/shared/components/organisms';
@@ -11,14 +12,12 @@ import type { MExample } from '@/shared/models';
 import type { TForm } from '@/shared/types';
 import constants from '../../.constants';
 
-const ExampleDataGrid = () => {
+const Component = () => {
   const [stateExample, setStateExample] = useState({ isVisible: false });
-  const list = sApi.useList<MExample, { id: string }>({
-    url: C_API.Example,
-    valueParam: '',
-    keyParam: 'id',
+  const list = useQuery<MExample[]>({
+    queryKey: ['example'],
+    queryFn: async () => (await serviceFetch.get<MExample[]>({ url: C_API.Example })) as MExample[],
   });
-
   const refTable = useRef<Table<MExample> | undefined>(undefined);
   const fnOpenModal = () => {
     setStateExample(old => ({ ...old, isVisible: true }));
@@ -74,4 +73,4 @@ const ExampleDataGrid = () => {
   );
 };
 
-export default ExampleDataGrid;
+export default Component;

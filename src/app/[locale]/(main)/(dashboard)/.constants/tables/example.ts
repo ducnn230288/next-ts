@@ -50,7 +50,7 @@ export const table = (): ColumnDef<MExample>[] => [
     },
   },
   {
-    accessorKey: 'date',
+    accessorKey: 'disabled_at',
     header: 'Date',
     meta: {
       sorter: true,

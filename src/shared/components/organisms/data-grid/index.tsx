@@ -13,6 +13,7 @@ import utils from './utils';
 const DataGrid = <TData,>({
   isLoading,
   handleExpand,
+  action,
 
   columns,
   data,
@@ -49,6 +50,23 @@ const DataGrid = <TData,>({
             header: Template.CheckboxHeader,
             cell: Template.CheckboxCell,
             meta: { isHeaderHide: true },
+          });
+        }
+
+        if (
+          action?.label &&
+          originalColumns.filter(item => item.id === '|||ACTION|||').length === 0
+        ) {
+          originalColumns.push({
+            id: '|||ACTION|||',
+            header: '',
+            size: 32,
+            meta: {
+              isHeaderHide: true,
+            },
+            cell: (prop: CellContext<TData, unknown>) => (
+              <Template.ActionCell {...prop} action={action} />
+            ),
           });
         }
 

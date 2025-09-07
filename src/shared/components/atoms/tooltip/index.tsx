@@ -4,11 +4,13 @@ import classNames from 'classnames';
 import { useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
+import { EPlacement } from '@/shared/enums/placement';
 import './style.scss';
 import type Props from './type';
 
 const Component = ({
-  placement = 'top',
+  title = 'Tooltip',
+  placement = EPlacement.Top,
   className,
   classContainer,
   isArrow = true,
@@ -117,6 +119,7 @@ const Component = ({
       placement,
       middleware,
     });
+    if (!isWidthFull) refTooltip.current.style.width = '';
 
     Object.assign(refTooltip.current.style, {
       position: strategy,
@@ -175,9 +178,10 @@ const Component = ({
       {stateTooltip.isOpen &&
         createPortal(
           <div
+            aria-label={title}
             ref={refTooltip}
             className={classNames('tooltip', className)}
-            style={{ width: isWidthFull ? refTrigger.current?.offsetWidth : undefined }}>
+            style={{ width: refTrigger.current?.offsetWidth }}>
             {content}
             {isArrow && <div className="arrow" ref={refArrow} />}
           </div>,

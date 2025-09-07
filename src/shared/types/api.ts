@@ -4,14 +4,12 @@ import type { TOption } from './option';
 /**
  * Represents the configuration options for retrieving data from a table.
  */
-export type TApi<T> = {
+export type TApi = {
   readonly keyApi?: keyof typeof C_API;
-  readonly method?: string;
-  readonly format?: (item: T) => TOption;
+  readonly format?: (item: Record<string, string>) => TOption;
   readonly params?: (props: {
     fullTextSearch: string;
     value?: unknown | null;
   }) => Record<string, unknown>;
-  readonly data?: () => T;
-  readonly keepUnusedDataFor?: number;
+  readonly staleTime?: number;
 };

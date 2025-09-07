@@ -40,3 +40,12 @@ Wait Until Element Spin
 Webpage should contain the search function
   ${element}=               Set Variable                        //*[contains(@class,"c-search")]
   Wait Until Element Is Existent                                ${element}
+
+Look message "${message}" in popup "${title}"
+  ${message}=               Check Text                          ${message}
+  Wait Until Element Spin
+  ${section}=               Set Variable                        //section[contains(@class, "dialog") and @aria-label="${title}"]
+  ${element}=               Set Variable                        ${section}//div[@class="body" and text()="${message}"]
+  Hover                     ${element}
+  Wait Until Element Is Existent                                ${element}
+  Click                     ${section}//div[@class="footer"]//button[@title="Okay"]

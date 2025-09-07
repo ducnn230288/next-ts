@@ -12,7 +12,6 @@ export type TStateGlobal = {
   isLoading?: boolean;
   status?: EStatusState;
   user?: MUser;
-  data?: MUser;
 };
 
 export type TActionStatusGlobal<T = unknown, E = never> = (

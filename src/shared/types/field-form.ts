@@ -16,11 +16,7 @@ export type TFieldForm<T> = {
   readonly title: string;
   readonly type: EFormType | null;
   readonly col?: number;
-  readonly condition?: (props: {
-    readonly value?: unknown;
-    readonly index: number;
-    readonly values?: T;
-  }) => boolean;
+  readonly condition?: (props: { readonly index: number; readonly values?: T }) => boolean;
   readonly rules?: TFieldFormRule<T>[];
   readonly disabled?: (props: { value?: DeepValue<T, DeepKeys<T>> }) => boolean;
   readonly placeholder?: string;
@@ -41,5 +37,5 @@ export type TFieldForm<T> = {
   };
   readonly options?: TOption[];
   readonly isMultiple?: boolean;
-  readonly api?: TApi<T>;
+  readonly api?: TApi;
 };

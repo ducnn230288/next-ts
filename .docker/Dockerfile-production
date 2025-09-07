@@ -8,6 +8,11 @@ RUN npm install
 
 # Copy source files and build Next.js in standalone mode
 COPY . .
+
+ARG NEXT_PUBLIC_URL_API
+ENV NEXT_PUBLIC_URL_API=$NEXT_PUBLIC_URL_API
+ENV NODE_ENV=production
+
 RUN npm run build
 
 # Stage 2: Prepare the minimal runtime image
